@@ -15,3 +15,7 @@ C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\obj\Debug\net6
 C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\obj\Debug\net6.0\AdaCredit.Console.pdb
 C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\obj\Debug\net6.0\AdaCredit.Console.genruntimeconfig.cache
 C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\obj\Debug\net6.0\ref\AdaCredit.Console.dll
+C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\bin\Debug\net6.0\ConsoleMenu.dll
+C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\bin\Debug\net6.0\Sharprompt.dll
+C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\bin\Debug\net6.0\de-DE\Sharprompt.resources.dll
+C:\Users\Usuário\Desktop\projetos_C_sharp\source\repos\AdaCredit\bin\Debug\net6.0\ja\Sharprompt.resources.dll

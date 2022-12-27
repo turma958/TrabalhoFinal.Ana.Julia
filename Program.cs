@@ -13,7 +13,7 @@ namespace AdaCredit.Console
         {
             // Logar usuario
 
-            Login.Show();
+            //Login.Show();
             
             // Mostrar menu
 
