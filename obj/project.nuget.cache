@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UWgIcJrYxNBtjKwY7c+XGgAwVbVZOj17GucsFRsjjpL+S4nX6cUIfUJhXs4flUxGL5t0kIEPmE7yKR1KJtCFmA==",
+  "dgSpecHash": "PTbIADfTE17W4yw2MVjLNYGocy3ZCB6dSt9PX/Dw6nXe0WMvv7j8I9qBBqFZNwpP+UUP6yfpVaesrY7KVCIIyQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\AdaCredit.Console.csproj",
+  "projectFilePath": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\AdaCredit.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuário\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Usuário\\.nuget\\packages\\consolemenu-simple\\2.4.3\\consolemenu-simple.2.4.3.nupkg.sha512",

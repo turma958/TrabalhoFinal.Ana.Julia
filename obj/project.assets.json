@@ -214,9 +214,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\AdaCredit.Console.csproj",
-      "projectName": "AdaCredit.Console",
-      "projectPath": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\AdaCredit.Console.csproj",
+      "projectUniqueName": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\AdaCredit.UI.csproj",
+      "projectName": "AdaCredit.UI",
+      "projectPath": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\AdaCredit.UI.csproj",
       "packagesPath": "C:\\Users\\Usuário\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\obj\\",
       "projectStyle": "PackageReference",

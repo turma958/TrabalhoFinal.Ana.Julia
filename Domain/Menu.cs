@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleTools;
 using System.Diagnostics;
+using AdaCredit.Console.UseCases;
 
 namespace AdaCredit.Console.Domain
 {
@@ -15,7 +16,7 @@ namespace AdaCredit.Console.Domain
         public static void Show()
         {
             var subClient = new ConsoleMenu(Array.Empty<string>(), level: 1)
-                .Add("Cadastrar novo cliente", () => AddNewClient())
+                .Add("Cadastrar novo cliente", AddNewClient.Execute)
                 //.Add("Consultar dados do cliente", () => ConsultClientData())
                 //.Add("Alterar cadastro do cliente", () => ChangeClientData())
                 //.Add("Desativar cadastro do cliente", () => CancelClientRegister())
@@ -99,19 +100,6 @@ namespace AdaCredit.Console.Domain
             menu.Show();
         }
 
-        public static void AddNewClient()
-        {
-            System.Console.WriteLine("Nome: ");
-            string name = System.Console.ReadLine();
-            System.Console.Write("CPF (somente números): ");
-            string id = System.Console.ReadLine();
-            System.Console.Write("Data de nascimento (somente números): ");
-            string birthDate = System.Console.ReadLine();
-            System.Console.Write("Telefone (somente números): ");
-            string telephone = System.Console.ReadLine();
-
-            
-
-        }
+         
     }
 }

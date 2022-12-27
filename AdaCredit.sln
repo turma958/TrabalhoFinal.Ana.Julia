@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaCredit.Console", "AdaCredit.Console.csproj", "{4C3A1734-4FD5-4600-89ED-5417F88C6949}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaCredit.Domain", "..\AdaCredit.Domain\AdaCredit.Domain.csproj", "{A0F2F829-8FCE-4362-BF9D-64E40593F107}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaCredit.Data", "..\AdaCredit.Data\AdaCredit.Data.csproj", "{9FC4FE9E-90D1-48E0-9A82-867D6C79C705}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaCredit.UI", "AdaCredit.UI.csproj", "{4C3A1734-4FD5-4600-89ED-5417F88C6949}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +15,6 @@ Global
 		{4C3A1734-4FD5-4600-89ED-5417F88C6949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C3A1734-4FD5-4600-89ED-5417F88C6949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C3A1734-4FD5-4600-89ED-5417F88C6949}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0F2F829-8FCE-4362-BF9D-64E40593F107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0F2F829-8FCE-4362-BF9D-64E40593F107}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0F2F829-8FCE-4362-BF9D-64E40593F107}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0F2F829-8FCE-4362-BF9D-64E40593F107}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FC4FE9E-90D1-48E0-9A82-867D6C79C705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FC4FE9E-90D1-48E0-9A82-867D6C79C705}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FC4FE9E-90D1-48E0-9A82-867D6C79C705}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FC4FE9E-90D1-48E0-9A82-867D6C79C705}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,26 +7,24 @@ using System.Threading.Tasks;
 
 namespace AdaCredit.Console.Domain
 {
-    internal class Client
+    public sealed class Client
     {
         public string Name { get; set; }
-        public string Document { get; set; }
-        public string BirthDate { get; set; }
-        public string Telephone { get; set; }
+        public long Document { get; set; }
+        public Account Account { get; private set; } = null;
 
-        public Client(string name, string document, string birthdate, string telephone)
+        public Client(string name, string document)
         {
             Name = name;
             Document = document;
-            BirthDate = birthdate;
-            Telephone = telephone;
+            Account = null;
         }
 
-        //public string GetName()
-        //{
-        //    return this.Name;
-        //}
-
-        
+        public Client(string name, string document, Account account)
+        {
+            Name = name;
+            Document = document;
+            Account = account;
+        }
     }
 }
