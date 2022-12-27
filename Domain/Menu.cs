@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleTools;
 using System.Diagnostics;
-using AdaCredit.Console.UseCases;
+using AdaCredit.UI.UseCases;
 
-namespace AdaCredit.Console.Domain
+namespace AdaCredit.UI.Domain
 {
     internal static class Menu
     {
@@ -17,7 +17,7 @@ namespace AdaCredit.Console.Domain
         {
             var subClient = new ConsoleMenu(Array.Empty<string>(), level: 1)
                 .Add("Cadastrar novo cliente", AddNewClient.Execute)
-                //.Add("Consultar dados do cliente", () => ConsultClientData())
+                .Add("Consultar dados do cliente", ConsultClientData.Execute)
                 //.Add("Alterar cadastro do cliente", () => ChangeClientData())
                 //.Add("Desativar cadastro do cliente", () => CancelClientRegister())
                 .Add("Voltar", ConsoleMenu.Close)

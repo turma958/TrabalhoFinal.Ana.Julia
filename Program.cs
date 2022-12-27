@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdaCredit.Console.Domain;
+using AdaCredit.UI.Domain;
 
-namespace AdaCredit.Console
+namespace AdaCredit.UI
 {
     internal class Program
     {

@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdaCredit.Console.Domain;
+using AdaCredit.UI.Data;
+using AdaCredit.UI.Domain;
 
-namespace AdaCredit.Console.UseCases
+namespace AdaCredit.UI.UseCases
 {
     public static class AddNewClient
     {
         public static void Execute()
         {
             System.Console.WriteLine("Nome: ");
-            string name = System.Console.ReadLine();
+            string name = Console.ReadLine();
             
             System.Console.Write("CPF (somente números): ");
-            long document = long.Parse(System.Console.ReadLine());
-            
-            //System.Console.Write("Data de nascimento (somente números): ");
-            //string birthDate = System.Console.ReadLine();
-            
-            //System.Console.Write("Telefone (somente números): ");
-            //string telephone = System.Console.ReadLine();
+            string document = Console.ReadLine();
 
-            Client client = new Client(name, document);
+            var client = new Client(name, document);
+            
+            var repository = new ClientRepository();
+            var result = repository.Add(client);
 
+            if (result)
+            {
+                Console.WriteLine("Cliente adicionado com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("Falha ao cadastrar novo cliente.");
+            }
+            Console.ReadKey();
         }
     }
 }

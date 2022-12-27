@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bogus;
 
-namespace AdaCredit.Console.Domain
+namespace AdaCredit.UI.Domain
 {
     public sealed class Account
     {

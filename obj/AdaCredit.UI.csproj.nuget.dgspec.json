@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[2.4.3, )"
             },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[30.0.1, )"
+            },
             "Sharprompt": {
               "target": "Package",
               "version": "[2.4.5, )"

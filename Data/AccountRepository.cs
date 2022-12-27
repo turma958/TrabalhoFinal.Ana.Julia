@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdaCredit.Console.Domain;
+using AdaCredit.UI.Domain;
 using Bogus;
 
-namespace AdaCredit.Console.Data
+namespace AdaCredit.UI.Data
 {
     public class AccountRepository
     {
-        private List<Account> _accounts = new List<Account>();
-        public Account GetNewUnique()
+        private static List<Account> _accounts = new List<Account>();
+        public static Account GetNewUnique()
         {
             var exists = false;
             var accountNumber = "";
@@ -25,5 +25,10 @@ namespace AdaCredit.Console.Data
 
             return new Account(accountNumber);
         }
+
+        //public Client GetByAccountNumber(string accountNumber)
+        //{
+
+        //}
     }
 }

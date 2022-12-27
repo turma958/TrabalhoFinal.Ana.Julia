@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdaCredit.Console.Domain
+namespace AdaCredit.UI.Domain
 {
     internal static class Login
     {
@@ -17,10 +17,10 @@ namespace AdaCredit.Console.Domain
                 System.Console.Clear();
 
                 System.Console.Write("Usuário: ");
-                string username = System.Console.ReadLine();
+                string username = Console.ReadLine();
 
                 System.Console.Write("Senha: ");
-                string password = System.Console.ReadLine();
+                string password = Console.ReadLine();
 
                 // NECESSITA ALTERAR A LÓGICA DE COMPARAÇÃO DE SENHA AQUI
 
