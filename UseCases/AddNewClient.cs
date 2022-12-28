@@ -21,7 +21,7 @@ namespace AdaCredit.UI.UseCases
             var client = new Client(name, document);
             
             var repository = new ClientRepository();
-            var result = repository.Add(client);
+            var result = repository.AddClient(client);
 
             if (result)
             {

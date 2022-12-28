@@ -56,7 +56,7 @@ namespace AdaCredit.UI.Data
                 throw;
             }
         }
-        public bool Add(Client client)
+        public bool AddClient(Client client)
         {
             if (_clients.Any(c => c.Document.Equals(client.Document)))
             {
@@ -98,7 +98,7 @@ namespace AdaCredit.UI.Data
 
             foreach (var c in clients)
             {
-                Console.Write($"Name: {c.Name}\nDocument: {c.Document}\nAccount Number: {c.Account.Number}\nAccount Branch: {c.Account.Branch}\n\n");
+                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n\n");
             }
         }
 
@@ -115,7 +115,7 @@ namespace AdaCredit.UI.Data
 
             foreach (var c in clients)
             {
-                Console.Write($"Name: {c.Name}\nDocument: {c.Document}\nAccount Number: {c.Account.Number}\nAccount Branch: {c.Account.Branch}\n\n");
+                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n\n");
             }
         }
         public void GetByAccountNumber(string number, string branch)
@@ -131,8 +131,39 @@ namespace AdaCredit.UI.Data
 
             foreach (var c in clients)
             {
-                Console.Write($"Name: {c.Name}\nDocument: {c.Document}\nAccount Number: {c.Account.Number}\nAccount Branch: {c.Account.Branch}\n\n");
+                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n\n");
             }
+        }
+
+        public bool ChangeData(string document,int index,  string newData)
+        {
+            //var clients = from client in _clients
+            //    where client.Document == document
+            //    select client;
+
+            var client = _clients.FirstOrDefault(c => c.Document == document);
+
+            if (client==null) 
+                return false;
+
+            if (index == 1)
+            {
+                client.Name = newData;
+            } else if (index == 2)
+            {
+                bool isBeingUsed= _clients.Any(c => c.Document == newData);
+                if (isBeingUsed)
+                    return false;
+
+                client.Document = newData;
+            }
+            //else
+            //{
+            //    _clients.Add(new Client(client.Name, document, AccountRepository.GetNewUnique()));
+            //}
+
+            Save();
+            return true;
         }
     }
 }

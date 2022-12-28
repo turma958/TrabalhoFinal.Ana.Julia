@@ -31,10 +31,26 @@ namespace AdaCredit.UI.Domain
                     config.SelectedItemForegroundColor = ConsoleColor.White;
                 });
 
+            var subChangeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
+                .Add("Alterar nome", () => ChangeClientData.Execute(1))
+                .Add("Alterar CPF", () =>ChangeClientData.Execute(2))
+                //.Add("Alterar número de conta", () => ChangeClientData.Execute(3))
+                .Add("Voltar", ConsoleMenu.Close)
+                .Configure(config =>
+                {
+                    config.Selector = "--> ";
+                    config.EnableFilter = false;
+                    config.Title = "Alterar cadastro do cliente";
+                    config.EnableBreadcrumb = true;
+                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
+                    config.SelectedItemForegroundColor = ConsoleColor.White;
+                });
+
             var subClient = new ConsoleMenu(Array.Empty<string>(), level: 1)
                 .Add("Cadastrar novo cliente", AddNewClient.Execute)
                 .Add("Consultar dados do cliente", subConsultData.Show)
-                //.Add("Alterar cadastro do cliente", () => ChangeClientData())
+                .Add("Alterar cadastro do cliente", subChangeData.Show)
                 //.Add("Desativar cadastro do cliente", () => CancelClientRegister())
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
