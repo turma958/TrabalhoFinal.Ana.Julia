@@ -11,40 +11,36 @@ namespace AdaCredit.UI.UseCases
 {
     public static class ConsultClientData
     {
-        public static void ExecuteByName()
+        public static void Execute(int index)
         {
+            string info;
+            string secondInfo="";
 
-            System.Console.WriteLine("Nome completo: ");
-            string name = Console.ReadLine();
+            if (index == 1)
+            {
+                System.Console.WriteLine("Nome completo: ");
+                info = Console.ReadLine();
+            } 
+            else if (index == 2)
+            {
+                System.Console.WriteLine("CPF (somente números): ");
+                info = Console.ReadLine();
+
+            }
+            else
+            {
+                System.Console.WriteLine("Número da conta: ");
+                info = Console.ReadLine();
+
+                System.Console.WriteLine("Número da conta: ");
+                secondInfo = Console.ReadLine();
+            }
 
             var repository = new ClientRepository();
-            repository.GetByName(name);
+            var result = repository.GetInfos(index, info, secondInfo);
 
-            Console.ReadKey();
-        }
-
-        public static void ExecuteByDocument()
-        {
-            System.Console.WriteLine("CPF: ");
-            string document = Console.ReadLine();
-
-            var repository = new ClientRepository();
-            repository.GetByDocument(document);
-
-            Console.ReadKey();
-
-        }
-        public static void ExecuteByAccountNumber()
-        {
-            System.Console.WriteLine("Número da conta: ");
-            string accountNumber = Console.ReadLine();
-
-            System.Console.WriteLine("Agência: ");
-            string branch = Console.ReadLine();
-
-
-            var repository = new ClientRepository();
-            repository.GetByAccountNumber(accountNumber, branch);
+            if(!result)
+                Console.WriteLine("Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
 
             Console.ReadKey();
         }

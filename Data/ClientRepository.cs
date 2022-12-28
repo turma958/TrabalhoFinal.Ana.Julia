@@ -12,6 +12,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using System.Formats.Asn1;
 using CsvHelper.Configuration.Attributes;
+using System.Xml.Linq;
 
 namespace AdaCredit.UI.Data
 {
@@ -85,71 +86,50 @@ namespace AdaCredit.UI.Data
                 csv.WriteRecords(_clients);
             }
         }
-        public void GetByName(string name)
+        public bool GetInfos(int index, string info, string secondInfo = "")
         {
-            var clients = from client in _clients
-                where client.Name == name
-                select client;
-            if (clients.Equals(Enumerable.Empty<Client>()))
+            Client client;
+            string situation;
+
+            if (index == 1)
             {
-                Console.WriteLine("Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
-                return;
+                var clients = from c in _clients
+                    where c.Name == info
+                    select c;
+
+                if (clients.Equals(Enumerable.Empty<Client>()))
+                    return false;
+
+                foreach (var c in clients)
+                {
+                    situation = "Desativada";
+                    if (c.IsActive)
+                        situation = "Ativada";
+                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
+                }
+                return true;
+            } 
+            else if (index == 2)
+            {
+                client = _clients.FirstOrDefault(c => c.Document == info);
+            }
+            else
+            {
+                client = _clients.FirstOrDefault(c => c.Account.Number == info && c.Account.Branch == secondInfo);
             }
 
-            foreach (var c in clients)
-            {
-                string situation = "Desativada";
-                if (c.IsActive)
-                    situation = "Ativada";
-                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
-            }
+            if (client == null)
+                return false;
+
+            situation = "Desativada";
+            if (client.IsActive)
+                situation = "Ativada";
+            Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação:{situation}\n");
+
+            return true;
         }
-
-        public void GetByDocument(string document)
-        {
-            var clients = from client in _clients
-                                        where client.Document == document
-                                        select client;
-            if (clients.Equals(Enumerable.Empty<Client>()))
-            {
-                Console.WriteLine("Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
-                return;
-            }
-
-            foreach (var c in clients)
-            {
-                string situation = "Desativada";
-                if (c.IsActive)
-                    situation = "Ativada";
-                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
-            }
-        }
-        public void GetByAccountNumber(string number, string branch)
-        {
-            var clients = from client in _clients
-                where client.Account.Number == number && client.Account.Branch == branch
-                select client;
-            if (clients.Equals(Enumerable.Empty<Client>()))
-            {
-                Console.WriteLine("Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
-                return;
-            }
-
-            foreach (var c in clients)
-            {
-                string situation = "Desativada";
-                if (c.IsActive)
-                    situation = "Ativada";
-                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
-            }
-        }
-
         public bool ChangeData(string document,int index,  string newData)
         {
-            //var clients = from client in _clients
-            //    where client.Document == document
-            //    select client;
-
             var client = _clients.FirstOrDefault(c => c.Document == document);
 
             if (client==null) 

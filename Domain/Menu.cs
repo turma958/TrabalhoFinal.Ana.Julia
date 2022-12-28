@@ -16,9 +16,9 @@ namespace AdaCredit.UI.Domain
         public static void Show()
         {
             var subConsultData = new ConsoleMenu(Array.Empty<string>(), level: 2)
-                .Add("Consultar por nome", ConsultClientData.ExecuteByName)
-                .Add("Consultar por CPF", ConsultClientData.ExecuteByDocument)
-                .Add("Consultar por número da conta", ConsultClientData.ExecuteByAccountNumber)
+                .Add("Consultar por nome", () => ConsultClientData.Execute(1))
+                .Add("Consultar por CPF", () => ConsultClientData.Execute(2))
+                .Add("Consultar por número da conta", () => ConsultClientData.Execute(3))
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
                 {
