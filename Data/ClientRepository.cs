@@ -105,7 +105,7 @@ namespace AdaCredit.UI.Data
                     situation = "Desativada";
                     if (c.IsActive)
                         situation = "Ativada";
-                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
+                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n Situação:{situation}\n");
                 }
                 return true;
             } 
@@ -124,7 +124,7 @@ namespace AdaCredit.UI.Data
             situation = "Desativada";
             if (client.IsActive)
                 situation = "Ativada";
-            Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação:{situation}\n");
+            Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação: {situation}\n");
 
             return true;
         }
@@ -146,10 +146,12 @@ namespace AdaCredit.UI.Data
 
                 client.Document = newData;
             }
-            //else
-            //{
-            //    _clients.Add(new Client(client.Name, document, AccountRepository.GetNewUnique()));
-            //}
+            else
+            {
+                var position = _clients.IndexOf(client);
+                _clients[position] = new Client(client.Name, document, AccountRepository.GetNewUnique());
+                Console.WriteLine($"A nova conta é {_clients[position].Account.Number}.");
+            }
 
             Save();
             return true;
@@ -162,7 +164,24 @@ namespace AdaCredit.UI.Data
             if(client==null) 
                 return false;
 
-            client.IsActive = false;
+            if (client.IsActive)
+            {
+                Console.WriteLine("A conta está ativa. Deseja desativar? (s/n)");
+                var answer = Console.ReadLine();
+                if (answer == "n")
+                    return false;
+
+                client.IsActive = false;
+            }
+            else
+            {
+                Console.WriteLine("A conta está desativada. Deseja ativar? (s/n)");
+                var answer = Console.ReadLine();
+                if (answer == "n")
+                    return false;
+
+                client.IsActive = true;
+            }
 
             Save();
             return true;

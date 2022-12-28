@@ -27,10 +27,12 @@ namespace AdaCredit.UI.UseCases
                 Console.WriteLine("CPF a atualizar: ");
                 newData = Console.ReadLine();
             }
-            //else
-            //{
-            //    Console.WriteLine("Uma nova conta será gerada.");
-            //}
+            else
+            {
+                Console.WriteLine("Uma nova conta será gerada.");
+            }
+
+            Console.WriteLine("\n---------- * ----------\n");
 
             var repository = new ClientRepository();
             var result = repository.ChangeData(document, index, newData);

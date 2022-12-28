@@ -14,14 +14,16 @@ namespace AdaCredit.UI.UseCases
         {
             System.Console.Write("CPF (somente números): ");
             string document = Console.ReadLine();
-            
+
+            Console.WriteLine("\n---------- * ----------\n");
+
             var repository = new ClientRepository();
             var result = repository.DeactivateClient(document);
 
-            string message = "Conta desativada com sucesso!";
+            string message = "Operação realizada com sucesso!";
 
             if (!result)
-                message = "Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.";
+                message = "Não foi possível realizar a operação.";
 
             Console.WriteLine(message);
             Console.ReadKey();

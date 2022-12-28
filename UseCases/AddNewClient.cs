@@ -19,7 +19,9 @@ namespace AdaCredit.UI.UseCases
             string document = Console.ReadLine();
 
             var client = new Client(name, document);
-            
+
+            Console.WriteLine("\n---------- * ----------\n");
+
             var repository = new ClientRepository();
             var result = repository.AddClient(client);
 

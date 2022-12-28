@@ -34,7 +34,7 @@ namespace AdaCredit.UI.Domain
             var subChangeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
                 .Add("Alterar nome", () => ChangeClientData.Execute(1))
                 .Add("Alterar CPF", () =>ChangeClientData.Execute(2))
-                //.Add("Alterar número de conta", () => ChangeClientData.Execute(3))
+                .Add("Alterar número de conta", () => ChangeClientData.Execute(3))
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
                 {
@@ -51,7 +51,7 @@ namespace AdaCredit.UI.Domain
                 .Add("Cadastrar novo cliente", AddNewClient.Execute)
                 .Add("Consultar dados do cliente", subConsultData.Show)
                 .Add("Alterar cadastro do cliente", subChangeData.Show)
-                .Add("Desativar cadastro do cliente", DeactivateClientRegister.Execute)
+                .Add("Desativar/Ativar cadastro do cliente", DeactivateClientRegister.Execute)
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
                 {

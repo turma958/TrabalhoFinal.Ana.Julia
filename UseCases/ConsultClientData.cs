@@ -36,6 +36,7 @@ namespace AdaCredit.UI.UseCases
                 secondInfo = Console.ReadLine();
             }
 
+            Console.WriteLine("\n---------- * ----------\n");
             var repository = new ClientRepository();
             var result = repository.GetInfos(index, info, secondInfo);
 
