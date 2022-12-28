@@ -25,10 +25,5 @@ namespace AdaCredit.UI.Data
 
             return new Account(accountNumber);
         }
-
-        //public Client GetByAccountNumber(string accountNumber)
-        //{
-
-        //}
     }
 }

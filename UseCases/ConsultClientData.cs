@@ -3,6 +3,7 @@ using AdaCredit.UI.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,28 +11,42 @@ namespace AdaCredit.UI.UseCases
 {
     public static class ConsultClientData
     {
-        public static void Execute()
+        public static void ExecuteByName()
         {
-            //System.Console.WriteLine("CPF do cliente (somente numeros): ");
-            //long document = long.Parse(Console.ReadLine());
 
-            //System.Console.Write("CPF (somente números): ");
-            //long document = long.Parse(Console.ReadLine());
+            System.Console.WriteLine("Nome completo: ");
+            string name = Console.ReadLine();
 
-            //var client = new Client(name, document);
+            var repository = new ClientRepository();
+            repository.GetByName(name);
 
-            //var repository = new ClientRepository();
-            //var result = repository.Add(client);
+            Console.ReadKey();
+        }
 
-            //if (result)
-            //{
-            //    Console.WriteLine("Cliente adicionado com sucesso!");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Falha ao cadastrar novo cliente.");
-            //}
-            //Console.ReadKey();
+        public static void ExecuteByDocument()
+        {
+            System.Console.WriteLine("CPF: ");
+            string document = Console.ReadLine();
+
+            var repository = new ClientRepository();
+            repository.GetByDocument(document);
+
+            Console.ReadKey();
+
+        }
+        public static void ExecuteByAccountNumber()
+        {
+            System.Console.WriteLine("Número da conta: ");
+            string accountNumber = Console.ReadLine();
+
+            System.Console.WriteLine("Agência: ");
+            string branch = Console.ReadLine();
+
+
+            var repository = new ClientRepository();
+            repository.GetByAccountNumber(accountNumber, branch);
+
+            Console.ReadKey();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace AdaCredit.UI
     internal class Program
     {
         static void Main(string[] args)
+        
         {
             // Logar usuario
 

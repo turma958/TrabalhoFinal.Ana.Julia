@@ -15,9 +15,25 @@ namespace AdaCredit.UI.Domain
     {
         public static void Show()
         {
+            var subConsultData = new ConsoleMenu(Array.Empty<string>(), level: 2)
+                .Add("Consultar por nome", ConsultClientData.ExecuteByName)
+                .Add("Consultar por CPF", ConsultClientData.ExecuteByDocument)
+                .Add("Consultar por número da conta", ConsultClientData.ExecuteByAccountNumber)
+                .Add("Voltar", ConsoleMenu.Close)
+                .Configure(config =>
+                {
+                    config.Selector = "--> ";
+                    config.EnableFilter = false;
+                    config.Title = "Consultar dados do cliente";
+                    config.EnableBreadcrumb = true;
+                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
+                    config.SelectedItemForegroundColor = ConsoleColor.White;
+                });
+
             var subClient = new ConsoleMenu(Array.Empty<string>(), level: 1)
                 .Add("Cadastrar novo cliente", AddNewClient.Execute)
-                .Add("Consultar dados do cliente", ConsultClientData.Execute)
+                .Add("Consultar dados do cliente", subConsultData.Show)
                 //.Add("Alterar cadastro do cliente", () => ChangeClientData())
                 //.Add("Desativar cadastro do cliente", () => CancelClientRegister())
                 .Add("Voltar", ConsoleMenu.Close)
@@ -27,7 +43,8 @@ namespace AdaCredit.UI.Domain
                     config.EnableFilter = false;
                     config.Title = "Clientes";
                     config.EnableBreadcrumb = true;
-                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.WriteBreadcrumbAction = titles => 
+                        System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
                 });
