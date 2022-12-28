@@ -98,7 +98,10 @@ namespace AdaCredit.UI.Data
 
             foreach (var c in clients)
             {
-                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n\n");
+                string situation = "Desativada";
+                if (c.IsActive)
+                    situation = "Ativada";
+                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
             }
         }
 
@@ -115,7 +118,10 @@ namespace AdaCredit.UI.Data
 
             foreach (var c in clients)
             {
-                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n\n");
+                string situation = "Desativada";
+                if (c.IsActive)
+                    situation = "Ativada";
+                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
             }
         }
         public void GetByAccountNumber(string number, string branch)
@@ -131,7 +137,10 @@ namespace AdaCredit.UI.Data
 
             foreach (var c in clients)
             {
-                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n\n");
+                string situation = "Desativada";
+                if (c.IsActive)
+                    situation = "Ativada";
+                Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
             }
         }
 
@@ -165,5 +174,19 @@ namespace AdaCredit.UI.Data
             Save();
             return true;
         }
+
+        public bool DeactivateClient(string document)
+        {
+            var client = _clients.FirstOrDefault(c => c.Document == document);
+
+            if(client==null) 
+                return false;
+
+            client.IsActive = false;
+
+            Save();
+            return true;
+        }
+
     }
 }

@@ -13,7 +13,7 @@ namespace AdaCredit.UI.Domain
         public string Document { get; set; }
         public Account Account { get; private set; } = null;
 
-        public bool IsActive { get; private set; } = true;
+        public bool IsActive { get; set; } = true;
 
         public Client(string name, string document)
         {

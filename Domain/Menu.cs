@@ -51,7 +51,7 @@ namespace AdaCredit.UI.Domain
                 .Add("Cadastrar novo cliente", AddNewClient.Execute)
                 .Add("Consultar dados do cliente", subConsultData.Show)
                 .Add("Alterar cadastro do cliente", subChangeData.Show)
-                //.Add("Desativar cadastro do cliente", () => CancelClientRegister())
+                .Add("Desativar cadastro do cliente", DeactivateClientRegister.Execute)
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
                 {

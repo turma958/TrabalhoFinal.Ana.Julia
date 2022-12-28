@@ -38,7 +38,7 @@ namespace AdaCredit.UI.UseCases
             string message = "Alteração finalizada com sucesso!";
 
             if (!result)
-                message = "Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.";
+                message = "Não foi possível alterar o cadastro. Verifique os dados ou cadastre um cliente novo.";
             
             Console.WriteLine(message);
             Console.ReadKey() ;
