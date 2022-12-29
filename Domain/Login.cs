@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdaCredit.UI.Data;
 
 namespace AdaCredit.UI.Domain
 {
@@ -20,18 +21,35 @@ namespace AdaCredit.UI.Domain
                 string username = Console.ReadLine();
 
                 System.Console.Write("Senha: ");
-                string password = Console.ReadLine();
+                var cleanPassword = string.Empty;
+                ConsoleKey key;
+                do
+                {
+                    var keyInfo = Console.ReadKey(intercept: true);
+                    key = keyInfo.Key;
 
-                // NECESSITA ALTERAR A LÓGICA DE COMPARAÇÃO DE SENHA AQUI
+                    if (key == ConsoleKey.Backspace && cleanPassword.Length > 0)
+                    {
+                        Console.Write("\b \b");
+                        cleanPassword = cleanPassword[0..^1];
+                    }
+                    else if (!char.IsControl(keyInfo.KeyChar))
+                    {
+                        Console.Write("*");
+                        cleanPassword += keyInfo.KeyChar;
+                    }
+                } while (key != ConsoleKey.Enter);
 
-                if (username.Equals("user", StringComparison.InvariantCultureIgnoreCase)
-                    && password.Equals("pass", StringComparison.CurrentCultureIgnoreCase))
+                var repository = new EmployeeRepository();
+                var result = repository.IsLoginValid(username, cleanPassword);
+
+                if (result)
                 {
                     loggedIn = true;
                     break;
                 }
 
-                System.Console.WriteLine("Login não efetuado. Por favor, verifique as informações.");
+                System.Console.WriteLine("\n\nLogin não efetuado. Por favor, verifique as informações.");
                 System.Console.ReadKey();
 
             } while (!loggedIn);

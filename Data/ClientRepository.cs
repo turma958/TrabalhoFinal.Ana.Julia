@@ -17,10 +17,10 @@ using System.Xml.Linq;
 namespace AdaCredit.UI.Data
 {
     public class ClientRepository
-    {
+    { 
         private static List<Client> _clients = new List<Client>();
 
-         static ClientRepository()
+        static ClientRepository()
         {
             try
             {
@@ -49,7 +49,6 @@ namespace AdaCredit.UI.Data
                         _clients.Add(new Client(record[0], record[1], new Account(record[2])));
                     }
                 }
-
             }
             catch (Exception e)
             {
@@ -105,7 +104,7 @@ namespace AdaCredit.UI.Data
                     situation = "Desativada";
                     if (c.IsActive)
                         situation = "Ativada";
-                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\n Situação:{situation}\n");
+                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
                 }
                 return true;
             } 
