@@ -45,7 +45,9 @@ namespace AdaCredit.UI.Data
                     while (csv.Read())
                     {
                         var record = csv.Record;
-                        _employees.Add(new Employee(record[0], record[1], record[2], record[3], record[4]));
+                        _employees.Add(new Employee(record[0], record[1], record[2], 
+                            record[3], record[4], Convert.ToBoolean(record[5]),
+                            DateTime.ParseExact(record[6], "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture)));
                     }
                 }
 
@@ -70,7 +72,7 @@ namespace AdaCredit.UI.Data
             string standardUsername = "user";
             string standardPassword = "pass";
             string salt = PasswordEncrypting.GenerateSalt();
-            var hashedPassword = PasswordEncrypting.Encrypt(standardPassword, salt);
+            var hashedPassword = PasswordEncrypting.Hash(standardPassword, salt);
 
             _employees.Add(new Employee(employee.Name, employee.Document, standardUsername, hashedPassword, salt));
 
@@ -100,13 +102,108 @@ namespace AdaCredit.UI.Data
                 return false;
 
             var salt = employee.Salt;
-            var hashedPassword = PasswordEncrypting.Encrypt(password, salt);
+            var hashedPassword = PasswordEncrypting.Hash(password, salt);
 
             if (_employees.Any(e => e.User == user && hashedPassword== e.HashedPassword))
                 return true;
 
             return false;
         }
+
+        public void IsFirstAccess(string user)
+        {
+            var employee = _employees.FirstOrDefault(e => e.User == user);
+
+            if (employee.LastAccess == default)
+            {
+                Console.WriteLine("Esse é o seu primeiro acesso. É necessário alterar usuário e senha para prosseguir.\n");
+                user = ChangeUsername(user);
+                ChangePassword(user);
+            }
+            
+            employee.LastAccess = DateTime.Now;
+            Save();
+        }
+        public string ChangeUsername(string user)
+        {
+            var employee = _employees.FirstOrDefault(e => e.User == user);
+
+            if (employee == null)
+                return null;
+
+            var flag = false;
+            
+            Console.Write("\nNovo usuário: ");
+            employee.User = Console.ReadLine();
+            
+            return employee.User;
+        }
+        public bool ChangePassword(string user)
+        {
+            var employee = _employees.FirstOrDefault(e => e.User == user);
+
+            if (employee == null)
+                return false;
+
+            var flag = false;
+            do
+            {
+                Console.Write("\nNova senha: ");
+                var firstTry = string.Empty;
+                ConsoleKey key;
+                do
+                {
+                    var keyInfo = Console.ReadKey(intercept: true);
+                    key = keyInfo.Key;
+
+                    if (key == ConsoleKey.Backspace && firstTry.Length > 0)
+                    {
+                        Console.Write("\b \b");
+                        firstTry = firstTry[0..^1];
+                    }
+                    else if (!char.IsControl(keyInfo.KeyChar))
+                    {
+                        Console.Write("*");
+                        firstTry += keyInfo.KeyChar;
+                    }
+                } while (key != ConsoleKey.Enter);
+
+                Console.Write("\nDigite novamente a nova senha: ");
+                var secondTry = string.Empty;
+                do
+                {
+                    var keyInfo = Console.ReadKey(intercept: true);
+                    key = keyInfo.Key;
+
+                    if (key == ConsoleKey.Backspace && secondTry.Length > 0)
+                    {
+                        Console.Write("\b \b");
+                        secondTry = secondTry[0..^1];
+                    }
+                    else if (!char.IsControl(keyInfo.KeyChar))
+                    {
+                        Console.Write("*");
+                        secondTry += keyInfo.KeyChar;
+                    }
+                } while (key != ConsoleKey.Enter);
+
+                flag = firstTry == secondTry;
+
+                if (flag)
+                {
+                    employee.Salt = PasswordEncrypting.GenerateSalt();
+                    var hashedPassword = PasswordEncrypting.Hash(firstTry, employee.Salt);
+                    employee.HashedPassword = hashedPassword;
+                    break;
+                }
+
+                Console.WriteLine("\nSenhas não coincidem. Tente novamente.\n");
+            } while (!flag);
+
+            return true;
+        }
+
+
         //public bool GetInfos(int index, string info, string secondInfo = "")
         //{
         //    Client client;

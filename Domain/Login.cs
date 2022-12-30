@@ -12,13 +12,15 @@ namespace AdaCredit.UI.Domain
         public static void Show()
         {
             bool loggedIn = false;
-
+            var repository = new EmployeeRepository();
+            string username;
+            
             do
             {
                 System.Console.Clear();
 
                 System.Console.Write("Usuário: ");
-                string username = Console.ReadLine();
+                username = Console.ReadLine();
 
                 System.Console.Write("Senha: ");
                 var cleanPassword = string.Empty;
@@ -40,7 +42,6 @@ namespace AdaCredit.UI.Domain
                     }
                 } while (key != ConsoleKey.Enter);
 
-                var repository = new EmployeeRepository();
                 var result = repository.IsLoginValid(username, cleanPassword);
 
                 if (result)
@@ -53,6 +54,10 @@ namespace AdaCredit.UI.Domain
                 System.Console.ReadKey();
 
             } while (!loggedIn);
+
+            System.Console.Clear();
+
+            repository.IsFirstAccess(username);
 
             System.Console.Clear();
             System.Console.WriteLine("Login efetuado com sucesso.");

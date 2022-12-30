@@ -13,10 +13,10 @@ namespace AdaCredit.UI.Domain
         public string Document { get; set; }
         public string User { get; set; } = "user";
         public string HashedPassword { get; set; }
-        public string Salt { get; private set; }
+        public string Salt { get; set; }
 
         public bool IsActive { get; set; } = true;
-        public DateTime LastAccess { get; set; }
+        public DateTime LastAccess { get; set; } = default;
 
         public Employee(string name, string document)
         {
@@ -25,7 +25,6 @@ namespace AdaCredit.UI.Domain
             User = "user";
             HashedPassword = "pass";
         }
-
         public Employee(string name, string document, string user, string hashedPassword, string salt)
         {
             Name = name;
@@ -33,6 +32,16 @@ namespace AdaCredit.UI.Domain
             User = user;
             HashedPassword = hashedPassword;
             Salt = salt;
+        }
+        public Employee(string name, string document, string user, string hashedPassword, string salt, bool isActive, DateTime lastAccess)
+        {
+            Name = name;
+            Document = document;
+            User = user;
+            HashedPassword = hashedPassword;
+            Salt = salt;
+            IsActive = isActive;
+            LastAccess = lastAccess;
         }
 
         public void Login()

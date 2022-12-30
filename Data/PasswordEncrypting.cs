@@ -18,7 +18,7 @@ namespace AdaCredit.UI.Data
             return new Faker().Random.Replace("$2a$10$***********************");
         }
         
-        public static string Encrypt(string cleanPassword, string salt)
+        public static string Hash(string cleanPassword, string salt)
         {
             var hashedPassword = HashPassword(cleanPassword, salt, false);
 
