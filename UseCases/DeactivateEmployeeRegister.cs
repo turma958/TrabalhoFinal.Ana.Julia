@@ -1,5 +1,4 @@
 ﻿using AdaCredit.UI.Data;
-using AdaCredit.UI.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace AdaCredit.UI.UseCases
 {
-    public static class DeactivateClientRegister
+    public class DeactivateEmployeeRegister
     {
         public static void Execute()
         {
-            Console.WriteLine("\n----- Desativar registro de cliente -----\n");
+            Console.WriteLine("\n----- Desativar registro de funcionário -----\n");
 
             System.Console.Write("CPF (somente números): ");
             string document = Console.ReadLine();
 
             Console.WriteLine("\n---------- * ----------\n");
 
-            var repository = new ClientRepository();
-            var result = repository.DeactivateClient(document);
+            var repository = new EmployeeRepository();
+            var result = repository.DeactivateEmployee(document);
 
             string message = "Operação realizada com sucesso!";
 

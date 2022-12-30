@@ -68,7 +68,6 @@ namespace AdaCredit.UI.Data
 
             return true;
         }
-
         public void SaveAccess(string username)
         {
             var employee = _employees.FirstOrDefault(e => e.User == username);
@@ -135,7 +134,6 @@ namespace AdaCredit.UI.Data
                 csv.WriteRecords(_employees);
             }
         }
-
         public bool IsLoginValid(string user, string password)
         {
             var employee = _employees.FirstOrDefault(e => e.User == user);
@@ -150,36 +148,96 @@ namespace AdaCredit.UI.Data
 
             return false;
         }
-        public bool ChangeUsername(string document)
+        public bool GetInfos(int index, string info)
+        {
+            Employee employee;
+            string situation = "Desativada";
+
+            if (index == 1)
+            {
+                var employees = from e in _employees 
+                              where e.Name == info
+                              select e;
+
+                if (employees.Equals(Enumerable.Empty<Employee>()))
+                    return false;
+
+                foreach (var e in employees)
+                {
+                    if (e.IsActive)
+                        situation = "Ativada";
+                    Console.Write($"Nome: {e.Name}\nCPF: {e.Document}\nUsuário: {e.User}\nSituação: {situation}\nÚltimo login: {e.LastAccess}\n\n");
+                }
+                return true;
+            }
+            else if (index == 2)
+            {
+                employee= _employees.FirstOrDefault(e => e.Document == info);
+            }
+            else
+            {
+                employee = _employees.FirstOrDefault(e => e.User == info);
+            }
+
+            if (employee == null)
+                return false;
+
+            if (employee.IsActive)
+                situation = "Ativada";
+
+            Console.Write($"Nome: {employee.Name}\nCPF: {employee.Document}\nUsuário: {employee.User}\nSituação: {situation} \nÚltimo login:  {employee.LastAccess}\n\n");
+
+            return true;
+        }
+        public bool ChangeData(string document, int index, string newData)
         {
             var employee = _employees.FirstOrDefault(e => e.Document == document);
 
             if (employee == null)
                 return false;
 
-            var flag = false;
+            switch (index)
+            {
+                case 1:
+                    employee.Name = newData;
+                    break;
+                case 2:
+                    bool isBeingUsed = _employees.Any(c => c.Document == newData);
+                    if (isBeingUsed)
+                        return false;
+
+                    employee.Document = newData;
+                    break;
+                case 3:
+                    employee.User = ChangeUsername(employee);
+                    break;
+                case 4:
+                    ChangePassword(employee);
+                    break;
+            }
+            Save();
+            return true;
+        }
+        public string ChangeUsername(Employee employee)
+        {
+            bool flag;
             string user;
             do
             {
                 Console.Write("\nNovo usuário: ");
                 user = Console.ReadLine();
                 flag = _employees.Any(e => e.User == user);
+                if (!flag)
+                    break;
+                Console.Write("Usuário indisponível. Tente outro nome.");
             } while (flag);
 
-            employee.User = user;
-            Save();
-
-            return true;
+            return user;
         }
-        public bool ChangePassword(string document)
+        public void ChangePassword(Employee employee)
         {
-            var employee = _employees.FirstOrDefault(e => e.Document == document);
-
-            if (employee == null)
-                return false;
-
             var flag = false;
-            string hashedPassword="";
+            string hashedPassword = "";
             do
             {
                 Console.Write("\nNova senha: ");
@@ -189,7 +247,7 @@ namespace AdaCredit.UI.Data
                 var secondTry = EnterPassword.Execute();
 
                 flag = firstTry == secondTry;
-                
+
                 if (flag)
                 {
                     hashedPassword = PasswordEncrypting.GenerateHash(firstTry, out var salt);
@@ -200,112 +258,34 @@ namespace AdaCredit.UI.Data
 
                 Console.WriteLine("\nSenhas não coincidem. Tente novamente.\n");
             } while (!flag);
+        }
+        public bool DeactivateEmployee(string document)
+        {
+            var employee = _employees.FirstOrDefault(e => e.Document == document);
 
+            if (employee == null)
+                return false;
+
+            if (employee.IsActive)
+            {
+                Console.WriteLine("A conta está ativa. Deseja desativar? (s/n)");
+                var answer = Console.ReadLine();
+                if (answer == "n")
+                    return false;
+
+                employee.IsActive = false;
+            }
+            else
+            {
+                Console.WriteLine("A conta está desativada. Deseja ativar? (s/n)");
+                var answer = Console.ReadLine();
+                if (answer == "n")
+                    return false;
+
+                employee.IsActive = true;
+            }
             Save();
             return true;
         }
-
-
-        //public bool GetInfos(int index, string info, string secondInfo = "")
-        //{
-        //    Client client;
-        //    string situation;
-
-        //    if (index == 1)
-        //    {
-        //        var clients = from c in _clients
-        //                      where c.Name == info
-        //                      select c;
-
-        //        if (clients.Equals(Enumerable.Empty<Client>()))
-        //            return false;
-
-        //        foreach (var c in clients)
-        //        {
-        //            situation = "Desativada";
-        //            if (c.IsActive)
-        //                situation = "Ativada";
-        //            Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
-        //        }
-        //        return true;
-        //    }
-        //    else if (index == 2)
-        //    {
-        //        client = _clients.FirstOrDefault(c => c.Document == info);
-        //    }
-        //    else
-        //    {
-        //        client = _clients.FirstOrDefault(c => c.Account.Number == info && c.Account.Branch == secondInfo);
-        //    }
-
-        //    if (client == null)
-        //        return false;
-
-        //    situation = "Desativada";
-        //    if (client.IsActive)
-        //        situation = "Ativada";
-        //    Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação: {situation}\n");
-
-        //    return true;
-        //}
-        //public bool ChangeData(string document, int index, string newData)
-        //{
-        //    var client = _clients.FirstOrDefault(c => c.Document == document);
-
-        //    if (client == null)
-        //        return false;
-
-        //    if (index == 1)
-        //    {
-        //        client.Name = newData;
-        //    }
-        //    else if (index == 2)
-        //    {
-        //        bool isBeingUsed = _clients.Any(c => c.Document == newData);
-        //        if (isBeingUsed)
-        //            return false;
-
-        //        client.Document = newData;
-        //    }
-        //    else
-        //    {
-        //        var position = _clients.IndexOf(client);
-        //        _clients[position] = new Client(client.Name, document, AccountRepository.GetNewUnique());
-        //        Console.WriteLine($"A nova conta é {_clients[position].Account.Number}.");
-        //    }
-
-        //    Save();
-        //    return true;
-        //}
-
-        //public bool DeactivateClient(string document)
-        //{
-        //    var client = _clients.FirstOrDefault(c => c.Document == document);
-
-        //    if (client == null)
-        //        return false;
-
-        //    if (client.IsActive)
-        //    {
-        //        Console.WriteLine("A conta está ativa. Deseja desativar? (s/n)");
-        //        var answer = Console.ReadLine();
-        //        if (answer == "n")
-        //            return false;
-
-        //        client.IsActive = false;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("A conta está desativada. Deseja ativar? (s/n)");
-        //        var answer = Console.ReadLine();
-        //        if (answer == "n")
-        //            return false;
-
-        //        client.IsActive = true;
-        //    }
-
-        //    Save();
-        //    return true;
-        //}
     }
 }

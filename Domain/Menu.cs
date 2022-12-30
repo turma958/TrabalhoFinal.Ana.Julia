@@ -15,7 +15,7 @@ namespace AdaCredit.UI.Domain
     {
         public static void Show()
         {
-            var subConsultData = new ConsoleMenu(Array.Empty<string>(), level: 2)
+            var subConsultClientData = new ConsoleMenu(Array.Empty<string>(), level: 2)
                 .Add("Consultar por nome", () => ConsultClientData.Execute(1))
                 .Add("Consultar por CPF", () => ConsultClientData.Execute(2))
                 .Add("Consultar por número da conta", () => ConsultClientData.Execute(3))
@@ -31,7 +31,7 @@ namespace AdaCredit.UI.Domain
                     config.SelectedItemForegroundColor = ConsoleColor.White;
                 });
 
-            var subChangeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
+            var subChangeClientData = new ConsoleMenu(Array.Empty<string>(), level: 2)
                 .Add("Alterar nome", () => ChangeClientData.Execute(1))
                 .Add("Alterar CPF", () =>ChangeClientData.Execute(2))
                 .Add("Alterar número de conta", () => ChangeClientData.Execute(3))
@@ -49,8 +49,8 @@ namespace AdaCredit.UI.Domain
 
             var subClient = new ConsoleMenu(Array.Empty<string>(), level: 1)
                 .Add("Cadastrar novo cliente", AddNewClient.Execute)
-                .Add("Consultar dados do cliente", subConsultData.Show)
-                .Add("Alterar cadastro do cliente", subChangeData.Show)
+                .Add("Consultar dados do cliente", subConsultClientData.Show)
+                .Add("Alterar cadastro do cliente", subChangeClientData.Show)
                 .Add("Desativar/Ativar cadastro do cliente", DeactivateClientRegister.Execute)
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
@@ -65,11 +65,44 @@ namespace AdaCredit.UI.Domain
                     config.SelectedItemForegroundColor = ConsoleColor.White;
                 });
 
+            var subConsultEmployeeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
+                .Add("Consultar por nome", () => ConsultEmployeeData.Execute(1))
+                .Add("Consultar por CPF", () => ConsultEmployeeData.Execute(2))
+                .Add("Consultar por usuário", () => ConsultEmployeeData.Execute(3))
+                .Add("Voltar", ConsoleMenu.Close)
+                .Configure(config =>
+                {
+                    config.Selector = "--> ";
+                    config.EnableFilter = false;
+                    config.Title = "Consultar dados do funcionário";
+                    config.EnableBreadcrumb = true;
+                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
+                    config.SelectedItemForegroundColor = ConsoleColor.White;
+                });
+
+            var subChangeEmployeeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
+                .Add("Alterar nome", () => ChangeEmployeeData.Execute(1))
+                .Add("Alterar CPF", () => ChangeEmployeeData.Execute(2))
+                .Add("Alterar usuário", () => ChangeEmployeeData.Execute(3))
+                .Add("Alterar senha", () => ChangeEmployeeData.Execute(4))
+                .Add("Voltar", ConsoleMenu.Close)
+                .Configure(config =>
+                {
+                    config.Selector = "--> ";
+                    config.EnableFilter = false;
+                    config.Title = "Alterar cadastro do Funcionário";
+                    config.EnableBreadcrumb = true;
+                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
+                    config.SelectedItemForegroundColor = ConsoleColor.White;
+                });
+
             var subEmployee = new ConsoleMenu(Array.Empty<string>(), level: 1)
                 .Add("Cadastrar novo funcionário", AddNewEmployee.Execute)
-                //.Add("Consultar dados do funcionário", () => ConsultEmployeeData())
-                //.Add("Alterar cadastro do funcionário", () => ChangeEmployeeData())
-                //.Add("Desativar cadastro do funcionário", () => CancelEmployeeRegister())
+                .Add("Consultar dados do funcionário",() => subConsultEmployeeData.Show())
+                .Add("Alterar cadastro do funcionário", () => subChangeEmployeeData.Show())
+                .Add("Desativar/Ativar cadastro do funcionário", DeactivateEmployeeRegister.Execute)
                 .Add("Voltar", ConsoleMenu.Close)
                 .Configure(config =>
                 {

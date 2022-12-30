@@ -14,7 +14,7 @@ namespace AdaCredit.UI
         {
             // Logar usuario
 
-            Login.Show();
+            //Login.Show();
             
             // Mostrar menu
 

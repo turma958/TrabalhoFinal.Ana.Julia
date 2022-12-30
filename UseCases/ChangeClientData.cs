@@ -12,6 +12,8 @@ namespace AdaCredit.UI.UseCases
     {
         public static void Execute(int index)
         {
+            Console.WriteLine("\n----- Alterar dados do cliente -----\n");
+
             System.Console.WriteLine("CPF da conta: ");
             string document = Console.ReadLine();
 
@@ -45,6 +47,5 @@ namespace AdaCredit.UI.UseCases
             Console.WriteLine(message);
             Console.ReadKey() ;
         }
-        
     }
 }

@@ -88,7 +88,7 @@ namespace AdaCredit.UI.Data
         public bool GetInfos(int index, string info, string secondInfo = "")
         {
             Client client;
-            string situation;
+            string situation = "Desativada";
 
             if (index == 1)
             {
@@ -101,10 +101,9 @@ namespace AdaCredit.UI.Data
 
                 foreach (var c in clients)
                 {
-                    situation = "Desativada";
                     if (c.IsActive)
                         situation = "Ativada";
-                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n");
+                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n\n");
                 }
                 return true;
             } 
@@ -120,10 +119,10 @@ namespace AdaCredit.UI.Data
             if (client == null)
                 return false;
 
-            situation = "Desativada";
             if (client.IsActive)
                 situation = "Ativada";
-            Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação: {situation}\n");
+            
+            Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação: {situation}\n\n");
 
             return true;
         }
