@@ -115,19 +115,19 @@ namespace AdaCredit.UI.Domain
                     config.SelectedItemForegroundColor = ConsoleColor.White;
                 });
 
-            //var subTransactions = new ConsoleMenu(Array.Empty<string>(), level: 1)
-            //    .Add("Processar transações (Reconciliação Bancária)", () => ProcessTransactions())
-            //    .Add("Voltar", ConsoleMenu.Close)
-            //    .Configure(config =>
-            //    {
-            //        config.Selector = "--> ";
-            //        config.EnableFilter = false;
-            //        config.Title = "Transações";
-            //        config.EnableBreadcrumb = true;
-            //        config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
-            //        config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
-            //        config.SelectedItemForegroundColor = ConsoleColor.White;
-            //    });
+            var subTransactions = new ConsoleMenu(Array.Empty<string>(), level: 1)
+                .Add("Processar transações", ProcessTransactions.Execute)
+                .Add("Voltar", ConsoleMenu.Close)
+                .Configure(config =>
+                {
+                    config.Selector = "--> ";
+                    config.EnableFilter = false;
+                    config.Title = "Transações";
+                    config.EnableBreadcrumb = true;
+                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
+                    config.SelectedItemForegroundColor = ConsoleColor.White;
+                });
 
             //var subReports = new ConsoleMenu(Array.Empty<string>(), level: 1)
             //    .Add("Exibir clientes ativos e saldos", () => CheckActiveClients())
@@ -149,7 +149,7 @@ namespace AdaCredit.UI.Domain
             var menu = new ConsoleMenu(Array.Empty<string>(), level: 0)
                 .Add("Clientes", subClient.Show)
                 .Add("Funcionários", subEmployee.Show)
-                //.Add("Transações", subTransactions.Show)
+                .Add("Transações", subTransactions.Show)
                 //.Add("Relatórios", subReports.Show)
                 .Add("Exit", () => Environment.Exit(0))
                 .Configure(config =>
