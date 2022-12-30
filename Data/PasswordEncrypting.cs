@@ -18,6 +18,14 @@ namespace AdaCredit.UI.Data
             return new Faker().Random.Replace("$2a$10$***********************");
         }
         
+        public static string GenerateHash(string cleanPassword, out string salt)
+        {
+            salt = GenerateSalt();
+            var hashedPassword = HashPassword(cleanPassword, salt, false);
+
+            return hashedPassword;
+        }
+
         public static string Hash(string cleanPassword, string salt)
         {
             var hashedPassword = HashPassword(cleanPassword, salt, false);

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Bogus;
@@ -13,6 +14,8 @@ using static BCrypt.Net.BCrypt;
 using Bogus.DataSets;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
+using AdaCredit.UI.UseCases;
+using System.Xml.Linq;
 
 namespace AdaCredit.UI.Data
 {
@@ -58,7 +61,22 @@ namespace AdaCredit.UI.Data
                 throw;
             }
         }
+        public bool FirstAccess()
+        {
+            if(_employees.Any())
+                return false;
 
+            return true;
+        }
+
+        public void SaveAccess(string username)
+        {
+            var employee = _employees.FirstOrDefault(e => e.User == username);
+
+            employee.LastAccess = DateTime.Now;
+
+            Save();
+        }
         public bool AddEmployee(Employee employee)
         {
             if (_employees.Any(e => e.Document.Equals(employee.Document)))
@@ -69,15 +87,39 @@ namespace AdaCredit.UI.Data
                 return false;
             }
 
-            string standardUsername = "user";
-            string standardPassword = "pass";
-            string salt = PasswordEncrypting.GenerateSalt();
-            var hashedPassword = PasswordEncrypting.Hash(standardPassword, salt);
+            bool flag;
+            string user;
+            do
+            {
+                Console.Write("\nUsuário: ");
+                user = Console.ReadLine();
+                flag = _employees.Any(e => e.User == user);
+            } while (flag);
+            
+            string hashedPassword = "";
+            string salt ="";
+            do
+            {
+                Console.Write("\nNova senha: ");
+                var firstTry = EnterPassword.Execute();
 
-            _employees.Add(new Employee(employee.Name, employee.Document, standardUsername, hashedPassword, salt));
+                Console.Write("\nDigite novamente a nova senha: ");
+                var secondTry = EnterPassword.Execute();
+
+                flag = firstTry == secondTry;
+
+                if (flag)
+                {
+                    hashedPassword = PasswordEncrypting.GenerateHash(firstTry, out salt);
+                    break;
+                }
+
+                Console.WriteLine("\nSenhas não coincidem. Tente novamente.\n");
+            } while (!flag);
+
+            _employees.Add(new Employee(employee.Name, employee.Document, user, hashedPassword, salt));
 
             Save();
-
             return true;
         }
         public void Save()
@@ -101,105 +143,65 @@ namespace AdaCredit.UI.Data
             if (employee == null)
                 return false;
 
-            var salt = employee.Salt;
-            var hashedPassword = PasswordEncrypting.Hash(password, salt);
+            var hashedPassword = PasswordEncrypting.Hash(password, employee.Salt);
 
             if (_employees.Any(e => e.User == user && hashedPassword== e.HashedPassword))
                 return true;
 
             return false;
         }
-
-        public void IsFirstAccess(string user)
+        public bool ChangeUsername(string document)
         {
-            var employee = _employees.FirstOrDefault(e => e.User == user);
-
-            if (employee.LastAccess == default)
-            {
-                Console.WriteLine("Esse é o seu primeiro acesso. É necessário alterar usuário e senha para prosseguir.\n");
-                user = ChangeUsername(user);
-                ChangePassword(user);
-            }
-            
-            employee.LastAccess = DateTime.Now;
-            Save();
-        }
-        public string ChangeUsername(string user)
-        {
-            var employee = _employees.FirstOrDefault(e => e.User == user);
-
-            if (employee == null)
-                return null;
-
-            var flag = false;
-            
-            Console.Write("\nNovo usuário: ");
-            employee.User = Console.ReadLine();
-            
-            return employee.User;
-        }
-        public bool ChangePassword(string user)
-        {
-            var employee = _employees.FirstOrDefault(e => e.User == user);
+            var employee = _employees.FirstOrDefault(e => e.Document == document);
 
             if (employee == null)
                 return false;
 
             var flag = false;
+            string user;
+            do
+            {
+                Console.Write("\nNovo usuário: ");
+                user = Console.ReadLine();
+                flag = _employees.Any(e => e.User == user);
+            } while (flag);
+
+            employee.User = user;
+            Save();
+
+            return true;
+        }
+        public bool ChangePassword(string document)
+        {
+            var employee = _employees.FirstOrDefault(e => e.Document == document);
+
+            if (employee == null)
+                return false;
+
+            var flag = false;
+            string hashedPassword="";
             do
             {
                 Console.Write("\nNova senha: ");
-                var firstTry = string.Empty;
-                ConsoleKey key;
-                do
-                {
-                    var keyInfo = Console.ReadKey(intercept: true);
-                    key = keyInfo.Key;
-
-                    if (key == ConsoleKey.Backspace && firstTry.Length > 0)
-                    {
-                        Console.Write("\b \b");
-                        firstTry = firstTry[0..^1];
-                    }
-                    else if (!char.IsControl(keyInfo.KeyChar))
-                    {
-                        Console.Write("*");
-                        firstTry += keyInfo.KeyChar;
-                    }
-                } while (key != ConsoleKey.Enter);
+                var firstTry = EnterPassword.Execute();
 
                 Console.Write("\nDigite novamente a nova senha: ");
-                var secondTry = string.Empty;
-                do
-                {
-                    var keyInfo = Console.ReadKey(intercept: true);
-                    key = keyInfo.Key;
-
-                    if (key == ConsoleKey.Backspace && secondTry.Length > 0)
-                    {
-                        Console.Write("\b \b");
-                        secondTry = secondTry[0..^1];
-                    }
-                    else if (!char.IsControl(keyInfo.KeyChar))
-                    {
-                        Console.Write("*");
-                        secondTry += keyInfo.KeyChar;
-                    }
-                } while (key != ConsoleKey.Enter);
+                var secondTry = EnterPassword.Execute();
 
                 flag = firstTry == secondTry;
-
+                
                 if (flag)
                 {
-                    employee.Salt = PasswordEncrypting.GenerateSalt();
-                    var hashedPassword = PasswordEncrypting.Hash(firstTry, employee.Salt);
+                    hashedPassword = PasswordEncrypting.GenerateHash(firstTry, out var salt);
                     employee.HashedPassword = hashedPassword;
+                    employee.Salt = salt;
                     break;
                 }
 
                 Console.WriteLine("\nSenhas não coincidem. Tente novamente.\n");
             } while (!flag);
 
+            Save();
             return true;
         }
 

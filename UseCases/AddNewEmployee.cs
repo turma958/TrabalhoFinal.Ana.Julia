@@ -12,26 +12,30 @@ namespace AdaCredit.UI.UseCases
     {
         public static void Execute()
         {
-            System.Console.WriteLine("Nome: ");
+            Console.WriteLine("\n----- Adicionar novo funcionário -----\n");
+
+            Console.WriteLine("Nome: ");
             string name = Console.ReadLine();
 
-            System.Console.WriteLine("CPF (somente números): ");
+            Console.WriteLine("CPF (somente números): ");
             string document = Console.ReadLine();
 
             var employee = new Employee(name, document);
+            var repository = new EmployeeRepository();
+
             
+
             Console.WriteLine("\n---------- * ----------\n");
 
-            var repository = new EmployeeRepository();
             var result = repository.AddEmployee(employee);
 
             if (result)
             {
-                Console.WriteLine("Funcionário adicionado com sucesso!");
+                Console.WriteLine("\n\nFuncionário adicionado com sucesso!");
             }
             else
             {
-                Console.WriteLine("Falha ao cadastrar novo funcionário.");
+                Console.WriteLine("\n\nFalha ao cadastrar novo funcionário.");
             }
             Console.ReadKey();
         }

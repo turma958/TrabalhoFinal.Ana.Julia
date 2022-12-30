@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdaCredit.UI.Data;
+using AdaCredit.UI.UseCases;
 
 namespace AdaCredit.UI.Domain
 {
@@ -12,40 +13,26 @@ namespace AdaCredit.UI.Domain
         public static void Show()
         {
             bool loggedIn = false;
-            var repository = new EmployeeRepository();
-            string username;
-            
+
             do
             {
                 System.Console.Clear();
 
                 System.Console.Write("Usuário: ");
-                username = Console.ReadLine();
+                string username = Console.ReadLine();
 
                 System.Console.Write("Senha: ");
-                var cleanPassword = string.Empty;
-                ConsoleKey key;
-                do
-                {
-                    var keyInfo = Console.ReadKey(intercept: true);
-                    key = keyInfo.Key;
+                var cleanPassword = EnterPassword.Execute();
 
-                    if (key == ConsoleKey.Backspace && cleanPassword.Length > 0)
-                    {
-                        Console.Write("\b \b");
-                        cleanPassword = cleanPassword[0..^1];
-                    }
-                    else if (!char.IsControl(keyInfo.KeyChar))
-                    {
-                        Console.Write("*");
-                        cleanPassword += keyInfo.KeyChar;
-                    }
-                } while (key != ConsoleKey.Enter);
+                if (IsFirstAccess.Execute() && username == "user" && cleanPassword == "pass")
+                    break;
 
+                var repository = new EmployeeRepository();
                 var result = repository.IsLoginValid(username, cleanPassword);
 
                 if (result)
                 {
+                    repository.SaveAccess(username);
                     loggedIn = true;
                     break;
                 }
@@ -54,10 +41,6 @@ namespace AdaCredit.UI.Domain
                 System.Console.ReadKey();
 
             } while (!loggedIn);
-
-            System.Console.Clear();
-
-            repository.IsFirstAccess(username);
 
             System.Console.Clear();
             System.Console.WriteLine("Login efetuado com sucesso.");
