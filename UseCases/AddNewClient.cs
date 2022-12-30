@@ -12,13 +12,21 @@ namespace AdaCredit.UI.UseCases
     {
         public static void Execute()
         {
-            System.Console.WriteLine("Nome: ");
+            Console.WriteLine("\n----- Adicionar novo cliente -----\n");
+
+            System.Console.Write("Nome: ");
             string name = Console.ReadLine();
             
             System.Console.Write("CPF (somente números): ");
-            string document = Console.ReadLine();
+            long document = long.Parse(Console.ReadLine());
 
-            var client = new Client(name, document);
+            System.Console.Write("Data de nascimento (dd/mm/aaaa): ");
+            string dateOfBirth = Console.ReadLine();
+
+            System.Console.Write("Endereço: ");
+            string address = Console.ReadLine();
+
+            var client = new Client(name, document, dateOfBirth, address);
 
             Console.WriteLine("\n---------- * ----------\n");
 
@@ -26,13 +34,10 @@ namespace AdaCredit.UI.UseCases
             var result = repository.AddClient(client);
 
             if (result)
-            {
-                Console.WriteLine("Cliente adicionado com sucesso!");
-            }
+                Console.WriteLine("\nCliente adicionado com sucesso!");
             else
-            {
-                Console.WriteLine("Falha ao cadastrar novo cliente.");
-            }
+                Console.WriteLine("\nFalha ao cadastrar novo cliente.");
+
             Console.ReadKey();
         }
     }

@@ -11,6 +11,7 @@ namespace AdaCredit.UI.Domain
     {
         public string Number { get; private set; }
         public string Branch { get; private set; }
+        public decimal Balance { get; set; } = 0M;
 
         public Account()
         {

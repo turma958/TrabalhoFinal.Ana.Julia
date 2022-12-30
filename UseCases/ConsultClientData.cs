@@ -13,37 +13,36 @@ namespace AdaCredit.UI.UseCases
     {
         public static void Execute(int index)
         {
-
             Console.WriteLine("\n----- Consultar dados do cliente -----\n");
-            string info;
+            
+            string info="";
             string secondInfo="";
 
-            if (index == 1)
+            switch (index)
             {
-                Console.WriteLine("Nome completo: ");
-                info = Console.ReadLine();
-            } 
-            else if (index == 2)
-            {
-                Console.WriteLine("CPF (somente números): ");
-                info = Console.ReadLine();
+                case 1:
+                    Console.Write("Nome completo: ");
+                    info = Console.ReadLine();
+                    break;
+                case 2:
+                    Console.Write("CPF (somente números): ");
+                    info = Console.ReadLine();
+                    break;
+                case 3:
+                    Console.Write("Número da conta: ");
+                    info = Console.ReadLine();
 
+                    Console.Write("Número da agência: ");
+                    secondInfo = Console.ReadLine();
+                    break;
             }
-            else
-            {
-                Console.WriteLine("Número da conta: ");
-                info = Console.ReadLine();
-
-                Console.WriteLine("Número da agência: ");
-                secondInfo = Console.ReadLine();
-            }
-
-            Console.WriteLine("\n---------- * ----------\n");
+            
+            Console.WriteLine("\n---------- * ----------\n\n");
             var repository = new ClientRepository();
             var result = repository.GetInfos(index, info, secondInfo);
 
             if(!result)
-                Console.WriteLine("Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
+                Console.WriteLine("\nNão foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
 
             Console.ReadKey();
         }

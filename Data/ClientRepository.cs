@@ -37,17 +37,11 @@ namespace AdaCredit.UI.Data
                 {
                     HasHeaderRecord = false,
                 };
-                
                 using (var reader = new StreamReader(filePath))
-                using (var csv = new CsvParser(reader, config))
+                using (var csv = new CsvReader(reader, config))
                 {
-
                     csv.Read();
-                    while (csv.Read())
-                    {
-                        var record = csv.Record;
-                        _clients.Add(new Client(record[0], record[1], new Account(record[2])));
-                    }
+                    _clients = csv.GetRecords<Client>().ToList();
                 }
             }
             catch (Exception e)
@@ -65,11 +59,9 @@ namespace AdaCredit.UI.Data
 
                 return false;
             }
-
-            _clients.Add(new Client(client.Name, client.Document, AccountRepository.GetNewUnique()));
+            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address, AccountRepository.GetNewUnique()));
             
             Save();
-            
             return true;
         }
         public void Save()
@@ -90,72 +82,89 @@ namespace AdaCredit.UI.Data
             Client client;
             string situation = "Desativada";
 
-            if (index == 1)
+            switch (index)
             {
-                var clients = from c in _clients
-                    where c.Name == info
-                    select c;
+                case 1:
+                    var clients = from c in _clients
+                        where c.Name == info
+                        select c;
 
-                if (clients.Equals(Enumerable.Empty<Client>()))
-                    return false;
+                    if (clients.Equals(Enumerable.Empty<Client>()))
+                        return false;
 
-                foreach (var c in clients)
-                {
-                    if (c.IsActive)
-                        situation = "Ativada";
-                    Console.Write($"Nome: {c.Name}\nCPF: {c.Document}\nNúmero da conta: {c.Account.Number}\nAgência: {c.Account.Branch}\nSituação:{situation}\n\n");
-                }
-                return true;
-            } 
-            else if (index == 2)
-            {
-                client = _clients.FirstOrDefault(c => c.Document == info);
+                    foreach (var c in clients)
+                    {
+                        if (c.IsActive)
+                            situation = "Ativada";
+                        Console.Write($"Nome: {c.Name}" +
+                                      $"\nCPF: {c.Document}" +
+                                      $"\nData de nascimento: {c.DateOfBirth}" +
+                                      $"\nEndereço: {c.Address}" +
+                                      $"\nNúmero da conta: {c.Account.Number}" +
+                                      $"\nAgência: {c.Account.Branch}" +
+                                      $"\nSaldo: {c.Account.Balance}" +
+                                      $"\nSituação: {situation}\n\n");
+                    }
+                    return true;
+                case 2:
+                    client = _clients.FirstOrDefault(c => c.Document == long.Parse(info));
+                    break;
+                default:
+                    client = _clients.FirstOrDefault(c => c.Account.Number == info && c.Account.Branch == secondInfo);
+                    break;
             }
-            else
-            {
-                client = _clients.FirstOrDefault(c => c.Account.Number == info && c.Account.Branch == secondInfo);
-            }
-
+            
             if (client == null)
                 return false;
 
             if (client.IsActive)
                 situation = "Ativada";
-            
-            Console.Write($"Nome: {client.Name}\nCPF: {client.Document}\nNúmero da conta: {client.Account.Number}\nAgência: {client.Account.Branch}\nSituação: {situation}\n\n");
+
+            Console.Write($"Nome: {client.Name}" +
+                          $"\nCPF: {client.Document}" +
+                          $"\nData de nascimento: {client.DateOfBirth}" +
+                          $"\nEndereço: {client.Address}" +
+                          $"\nNúmero da conta: {client.Account.Number}" +
+                          $"\nAgência: {client.Account.Branch}" +
+                          $"\nSaldo: {client.Account.Balance}" +
+                          $"\nSituação: {situation}\n\n");
 
             return true;
         }
-        public bool ChangeData(string document,int index,  string newData)
+        public bool ChangeData(long  document,int index,  string newData)
         {
             var client = _clients.FirstOrDefault(c => c.Document == document);
 
             if (client==null) 
                 return false;
 
-            if (index == 1)
+            switch (index)
             {
-                client.Name = newData;
-            } else if (index == 2)
-            {
-                bool isBeingUsed= _clients.Any(c => c.Document == newData);
-                if (isBeingUsed)
-                    return false;
-
-                client.Document = newData;
-            }
-            else
-            {
-                var position = _clients.IndexOf(client);
-                _clients[position] = new Client(client.Name, document, AccountRepository.GetNewUnique());
-                Console.WriteLine($"A nova conta é {_clients[position].Account.Number}.");
+                case 1:
+                    client.Name = newData;
+                    break;
+                case 2:
+                    bool isBeingUsed = _clients.Any(c => c.Document == long.Parse(newData));
+                    if (isBeingUsed)
+                        return false;
+                    client.Document = long.Parse(newData);
+                    break;
+                case 3:
+                    client.DateOfBirth = newData;
+                    break;
+                case 4:
+                    client.Address = newData;
+                    break;
+                //case 5:
+                //    var position = _clients.IndexOf(client);
+                //    _clients[position] = new Client(client.Name, document, AccountRepository.GetNewUnique());
+                //    Console.WriteLine($"A nova conta é {_clients[position].Account.Number}.");
             }
 
             Save();
             return true;
         }
-
-        public bool DeactivateClient(string document)
+        public bool DeactivateClient(long document)
         {
             var client = _clients.FirstOrDefault(c => c.Document == document);
 

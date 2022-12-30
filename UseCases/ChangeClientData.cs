@@ -14,27 +14,34 @@ namespace AdaCredit.UI.UseCases
         {
             Console.WriteLine("\n----- Alterar dados do cliente -----\n");
 
-            System.Console.WriteLine("CPF da conta: ");
-            string document = Console.ReadLine();
+            System.Console.Write("CPF da conta: ");
+            long document =long.Parse(Console.ReadLine());
 
             string newData = "";
 
-            if (index == 1)
+            switch (index)
             {
-                Console.WriteLine("Nome a atualizar: ");
-                newData = Console.ReadLine();
-
-            } else if (index == 2)
-            {
-                Console.WriteLine("CPF a atualizar: ");
-                newData = Console.ReadLine();
+                case 1:
+                    Console.Write("\nNome atualizado: ");
+                    newData = Console.ReadLine();
+                    break;
+                case 2:
+                    Console.Write("\nCPF atualizado (somente números): ");
+                    newData = Console.ReadLine();
+                    break;
+                case 3:
+                    Console.Write("\nData de nascimento atualizada (dd/mm/aaaa): ");
+                    newData = Console.ReadLine();
+                    break;
+                case 4:
+                    Console.Write("\nEndereço atualizado: ");
+                    newData = Console.ReadLine();
+                    break;
+                //case 5:
+                //    Console.WriteLine("Uma nova conta será gerada.");
             }
-            else
-            {
-                Console.WriteLine("Uma nova conta será gerada.");
-            }
 
-            Console.WriteLine("\n---------- * ----------\n");
+            Console.WriteLine("\n\n---------- * ----------\n");
 
             var repository = new ClientRepository();
             var result = repository.ChangeData(document, index, newData);
