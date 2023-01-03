@@ -11,8 +11,13 @@ namespace AdaCredit.UI.Data
     public class AccountRepository
     {
         private static List<Account> _accounts = new List<Account>();
-        public static Account GetNewUnique()
+        public static Account GetNewUnique(List<Client> clients)
         {
+            foreach (var client in clients)
+            {
+                _accounts.Add(client.Account);
+            }
+
             var exists = false;
             var accountNumber = "";
 

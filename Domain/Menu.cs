@@ -153,7 +153,7 @@ namespace AdaCredit.UI.Domain
                 .Add("Funcionários", subEmployee.Show)
                 .Add("Transações", subTransactions.Show)
                 //.Add("Relatórios", subReports.Show)
-                .Add("Exit", () => Environment.Exit(0))
+                .Add("Sair", () => Environment.Exit(0))
                 .Configure(config =>
                 {
                     config.Selector = "--> ";

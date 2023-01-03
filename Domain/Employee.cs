@@ -10,47 +10,30 @@ namespace AdaCredit.UI.Domain
     public sealed class Employee
     {
         public string Name { get; set; }
-        public string Document { get; set; }
-        public string User { get; set; } = "user";
-        public string HashedPassword { get; set; }
-        public string Salt { get; set; }
-
+        public long Document { get; set; }
+        public User User { get; set; }
         public bool IsActive { get; set; } = true;
         public DateTime LastAccess { get; set; } = default;
 
-        public Employee(string name, string document, string user)
+        public Employee(string name, long document)
         {
             Name = name;
             Document = document;
-            User = "user";
-            HashedPassword = "pass";
         }
-        public Employee(string name, string document)
-        {
-            Name = name;
-            Document = document;
-            User = "";
-            HashedPassword = "";
-            Salt = "";
-        }
-        public Employee(string name, string document, string user, string hashedPassword, string salt)
+        public Employee(string name, long document, User user)
         {
             Name = name;
             Document = document;
             User = user;
-            HashedPassword = hashedPassword;
-            Salt = salt;
         }
 
-        public Employee(string name, string document, string user, string hashedPassword, string salt, bool isActive, DateTime lastAccess)
+        public Employee(string name, long document, User user, bool isActive, DateTime lastAccess)
         {
             Name = name;
             Document = document;
             User = user;
-            HashedPassword = hashedPassword;
-            Salt = salt;
             IsActive = isActive;
             LastAccess = lastAccess;
-        }
+        }// For text register
     }
 }

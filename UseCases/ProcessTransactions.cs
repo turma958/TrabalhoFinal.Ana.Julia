@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdaCredit.UI.Data;
 
 namespace AdaCredit.UI.UseCases
 {
@@ -10,7 +11,7 @@ namespace AdaCredit.UI.UseCases
     {
         public static void Execute()
         {
-
+            var repository = new TransactionsRepository();
         }
     }
 }

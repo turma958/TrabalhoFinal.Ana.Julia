@@ -14,22 +14,22 @@ namespace AdaCredit.UI.UseCases
             Console.WriteLine("\n----- Consultar dados do funcionário -----\n");
             string info;
 
-            if (index == 1)
+            switch (index)
             {
-                Console.WriteLine("Nome completo: ");
-                info = Console.ReadLine();
+                case 1:
+                    Console.WriteLine("Nome completo: ");
+                    info = Console.ReadLine();
+                    break;
+                case 2:
+                    Console.WriteLine("CPF (somente números): ");
+                    info = Console.ReadLine();
+                    break;
+                default:
+                    Console.WriteLine("Usuário: ");
+                    info = Console.ReadLine();
+                    break;
             }
-            else if (index == 2)
-            {
-                Console.WriteLine("CPF (somente números): ");
-                info = Console.ReadLine();
 
-            }
-            else
-            {
-                Console.WriteLine("Usuário: ");
-                info = Console.ReadLine();
-            }
 
             Console.WriteLine("\n---------- * ----------\n");
             var repository = new EmployeeRepository();

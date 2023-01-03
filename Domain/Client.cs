@@ -10,20 +10,6 @@ using CsvHelper.Configuration;
 
 namespace AdaCredit.UI.Domain
 {
-    public class ClientMap : ClassMap<Client>
-    {
-        public ClientMap()
-        {
-            Map(m => m.Name).Name("Name");
-            Map(m => m.Document).Name("Document");
-            Map(m => m.DateOfBirth).Name("DateOfBirth");
-            Map(m => m.Address).Name("Address");
-            Map(m => m.Account.Number).Name("Number");
-            Map(m => m.Account.Branch).Name("Branch");
-            Map(m => m.Account.Balance).Name("Balance");
-            Map(m => m.IsActive).Name("IsActive");
-        }
-    }
     public sealed class Client
     {
         public string Name { get; set; }

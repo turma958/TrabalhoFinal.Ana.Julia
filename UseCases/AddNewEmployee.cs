@@ -18,7 +18,7 @@ namespace AdaCredit.UI.UseCases
             string name = Console.ReadLine();
 
             Console.WriteLine("CPF (somente números): ");
-            string document = Console.ReadLine();
+            long document = long.Parse(Console.ReadLine());
 
             var employee = new Employee(name, document);
             var repository = new EmployeeRepository();

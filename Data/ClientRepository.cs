@@ -24,7 +24,7 @@ namespace AdaCredit.UI.Data
         {
             try
             {
-                string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string path = Path.GetDirectoryName(@"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
                 string fileName = "Clients.txt";
                 string filePath = Path.Combine(path, fileName);
 
@@ -59,14 +59,14 @@ namespace AdaCredit.UI.Data
 
                 return false;
             }
-            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address, AccountRepository.GetNewUnique()));
+            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address, AccountRepository.GetNewUnique(_clients)));
             
             Save();
             return true;
         }
         public void Save()
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = Path.GetDirectoryName(@"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
             string fileName = "Clients.txt";
 
             string filePath = Path.Combine(path, fileName);
@@ -157,7 +157,7 @@ namespace AdaCredit.UI.Data
                     break;
                 //case 5:
                 //    var position = _clients.IndexOf(client);
-                //    _clients[position] = new Client(client.Name, document, AccountRepository.GetNewUnique());
+                //    _clients[position] = new Client(client.Name, document, AccountRepository.GetNewUnique(_clients));
                 //    Console.WriteLine($"A nova conta é {_clients[position].Account.Number}.");
             }
 

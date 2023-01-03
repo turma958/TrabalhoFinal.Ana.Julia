@@ -13,12 +13,6 @@ namespace AdaCredit.UI.Domain
         public string Branch { get; private set; }
         public decimal Balance { get; set; } = 0M;
 
-        public Account()
-        {
-            Number = new Faker().Random.ReplaceNumbers("#####-#");
-            Branch = "0001";
-        }
-
         public Account(string number)
         {
             Number = number;
