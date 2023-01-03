@@ -20,26 +20,35 @@ namespace AdaCredit.UI.Data
             {
                 string finalFolder = "Transactions";
                 string mainPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), finalFolder);
-                
+
                 if (!Directory.Exists(mainPath))
                 {
                     Directory.CreateDirectory(mainPath);
                     return;
                 }
 
-                var paths = Directory.EnumerateFiles(mainPath, "*.csv").ToList();
+                var filteredFiles = Directory
+                    .GetFiles(mainPath, "*.*")
+                    .Where(file => !file.EndsWith("-completed.csv"))
+                    .ToList();
 
-                foreach (var path in paths)
+                foreach (var file in filteredFiles)
                 {
+                    List<Transactions> records;
                     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                     {
                         HasHeaderRecord = false,
                     };
-                    using (var reader = new StreamReader(path))
+                    using (var reader = new StreamReader(file))
                     using (var csv = new CsvReader(reader, config))
                     {
-                        csv.Read();
-                        _transactions = csv.GetRecords<Transactions>().ToList();
+
+                        records = csv.GetRecords<Transactions>().ToList();
+                    }
+
+                    foreach (var record in records)
+                    {
+                        _transactions.Add(record);
                     }
                 }
             }
@@ -47,11 +56,6 @@ namespace AdaCredit.UI.Data
             {
                 Console.WriteLine(e);
                 throw;
-            }
-
-            foreach (var transaction in _transactions)
-            {
-                Console.Write(transaction.Value);
             }
         }
 
