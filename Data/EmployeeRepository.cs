@@ -218,5 +218,21 @@ namespace AdaCredit.UI.Data
             Save();
             return true;
         }
+        public void CheckEmployeesAndLogin()
+        {
+            foreach (var employee in _employees)
+            {
+                if(!employee.IsActive)
+                    continue;
+                Console.WriteLine($"\nNome: {employee.Name}" +
+                                  $"\nCPF: {employee.Document}" +
+                                  $"\nUsuário: {employee.User.Username}" +
+                                  $"\nÚltimo Login: {employee.LastAccess}");
+
+                Console.WriteLine("\n---------- * ----------\n");
+            }
+
+            Console.WriteLine("Relatório finalizado.");
+        }
     }
 }

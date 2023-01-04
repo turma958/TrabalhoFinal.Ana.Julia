@@ -131,28 +131,28 @@ namespace AdaCredit.UI.Domain
                     config.SelectedItemForegroundColor = ConsoleColor.White;
                 });
 
-            //var subReports = new ConsoleMenu(Array.Empty<string>(), level: 1)
-            //    .Add("Exibir clientes ativos e saldos", () => CheckActiveClients())
-            //    .Add("Exibir clientes inativos", () => CheckInactiveClients())
-            //    .Add("Exibir funcionários ativos e último login", () => CheckActiveEmployees())
-            //    .Add("Exibir transações com erro", () => CheckErrorsTransactions())
-            //    .Add("Voltar", ConsoleMenu.Close)
-            //    .Configure(config =>
-            //    {
-            //        config.Selector = "--> ";
-            //        config.EnableFilter = false;
-            //        config.Title = "Relatórios";
-            //        config.EnableBreadcrumb = true;
-            //        config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
-            //        config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
-            //        config.SelectedItemForegroundColor = ConsoleColor.White;
-            //    });
+            var subReports = new ConsoleMenu(Array.Empty<string>(), level: 1)
+                .Add("Exibir clientes ativos e saldos", CheckActiveClients.Execute)
+                .Add("Exibir clientes inativos", CheckInactiveClients.Execute)
+                .Add("Exibir funcionários ativos e último login", CheckActiveEmployees.Execute)
+                .Add("Exibir transações com erro", CheckFailedTransactions.Execute)
+                .Add("Voltar", ConsoleMenu.Close)
+                .Configure(config =>
+                {
+                    config.Selector = "--> ";
+                    config.EnableFilter = false;
+                    config.Title = "Relatórios";
+                    config.EnableBreadcrumb = true;
+                    config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
+                    config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
+                    config.SelectedItemForegroundColor = ConsoleColor.White;
+                });
 
             var menu = new ConsoleMenu(Array.Empty<string>(), level: 0)
                 .Add("Clientes", subClient.Show)
                 .Add("Funcionários", subEmployee.Show)
                 .Add("Transações", subTransactions.Show)
-                //.Add("Relatórios", subReports.Show)
+                .Add("Relatórios", subReports.Show)
                 .Add("Sair", () => Environment.Exit(0))
                 .Configure(config =>
                 {

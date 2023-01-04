@@ -18,14 +18,16 @@ using System.Xml.Linq;
 namespace AdaCredit.UI.Data
 {
     public class ClientRepository
-    { 
+    {
         private static List<Client> _clients = new List<Client>();
 
         static ClientRepository()
         {
             try
             {
-                string path = Path.GetDirectoryName(@"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
+                string path =
+                    Path.GetDirectoryName(
+                        @"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
                 string fileName = "Clients.txt";
                 string filePath = Path.Combine(path, fileName);
 
@@ -51,6 +53,7 @@ namespace AdaCredit.UI.Data
                 throw;
             }
         }
+
         public List<Account> PassAccounts()
         {
             List<Account> accounts = _clients.Select(c => c.Account).ToList();
@@ -68,14 +71,18 @@ namespace AdaCredit.UI.Data
             }
 
             var repository = new AccountRepository();
-            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address, repository.GetNewUnique()));
-            
+            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address,
+                repository.GetNewUnique()));
+
             Save();
             return true;
         }
+
         public void Save()
         {
-            string path = Path.GetDirectoryName(@"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
+            string path =
+                Path.GetDirectoryName(
+                    @"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
             string fileName = "Clients.txt";
 
             string filePath = Path.Combine(path, fileName);
@@ -86,6 +93,7 @@ namespace AdaCredit.UI.Data
                 csv.WriteRecords(_clients);
             }
         }
+
         public bool GetInfos(int index, string info, string secondInfo = "")
         {
             Client client;
@@ -111,9 +119,10 @@ namespace AdaCredit.UI.Data
                                       $"\nEndereço: {c.Address}" +
                                       $"\nNúmero da conta: {c.Account.Number}" +
                                       $"\nAgência: {c.Account.Branch}" +
-                                      $"\nSaldo: {c.Account.Balance}" +
+                                      $"\nSaldo: R${c.Account.Balance}" +
                                       $"\nSituação: {situation}\n\n");
                     }
+
                     return true;
                 case 2:
                     client = _clients.FirstOrDefault(c => c.Document == long.Parse(info));
@@ -122,7 +131,7 @@ namespace AdaCredit.UI.Data
                     client = _clients.FirstOrDefault(c => c.Account.Number == info && c.Account.Branch == secondInfo);
                     break;
             }
-            
+
             if (client == null)
                 return false;
 
@@ -135,16 +144,17 @@ namespace AdaCredit.UI.Data
                           $"\nEndereço: {client.Address}" +
                           $"\nNúmero da conta: {client.Account.Number}" +
                           $"\nAgência: {client.Account.Branch}" +
-                          $"\nSaldo: {client.Account.Balance}" +
+                          $"\nSaldo: R${client.Account.Balance}" +
                           $"\nSituação: {situation}\n\n");
 
             return true;
         }
-        public bool ChangeData(long  document,int index,  string newData)
+
+        public bool ChangeData(long document, int index, string newData)
         {
             var client = _clients.FirstOrDefault(c => c.Document == document);
 
-            if (client==null) 
+            if (client == null)
                 return false;
 
             switch (index)
@@ -173,11 +183,12 @@ namespace AdaCredit.UI.Data
             Save();
             return true;
         }
+
         public bool DeactivateClient(long document)
         {
             var client = _clients.FirstOrDefault(c => c.Document == document);
 
-            if(client==null) 
+            if (client == null)
                 return false;
 
             if (client.Account.IsActive)
@@ -215,6 +226,43 @@ namespace AdaCredit.UI.Data
                 client.Account.Balance += value;
 
             Save();
+        }
+
+        public void CheckClientsAndBalances()
+        {
+            foreach (var client in _clients)
+            {
+                if (!client.Account.IsActive)
+                    continue;
+
+                Console.WriteLine($"\nNome: {client.Name}" +
+                                  $"\nCPF: {client.Document}" +
+                                  $"\nAgência: {client.Account.Branch}" +
+                                  $"\nNúmero da conta: {client.Account.Number}" +
+                                  $"\nSaldo: R${client.Account.Balance}");
+
+                Console.WriteLine("\n---------- * ----------\n");
+            }
+
+            Console.WriteLine("Relatório finalizado.");
+        }
+
+        public void CheckInactiveClients()
+        {
+            foreach (var client in _clients)
+            {
+                if (client.Account.IsActive)
+                    continue;
+
+                Console.WriteLine($"\nNome: {client.Name}" +
+                                  $"\nCPF: {client.Document}" +
+                                  $"\nAgência: {client.Account.Branch}" +
+                                  $"\nNúmero da conta: {client.Account.Number}");
+
+                Console.WriteLine("\n---------- * ----------\n");
+            }
+
+            Console.WriteLine("Relatório finalizado.");
         }
     }
 }

@@ -18,6 +18,7 @@ namespace AdaCredit.UI.Data
     {
         private static List<Transactions> _transactions = new List<Transactions>();
 
+        static TransactionsRepository() { }
         public List<string> FindPaths()
         {
             string mainPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Transactions");
@@ -285,9 +286,28 @@ namespace AdaCredit.UI.Data
 
             return true;
         }
-        static TransactionsRepository() {}
+        public static void FailedTransactions()
+        {
+            string failed = "Failed.txt";
+            string failedPath = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory))), failed);
 
-
-
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                Delimiter = ", "
+            };
+            using var reader = new StreamReader(failedPath);
+            using var csv = new CsvParser(reader, config);
+            {
+                while (csv.Read())
+                {
+                    Console.WriteLine($"Data: {csv.Record[0]}" +
+                                      $"\nTransação: {csv.Record[1]}" +
+                                      $"\nMotivo: {csv.Record[2]}");
+                    Console.WriteLine("\n---------- * ----------\n");
+                }
+            }
+            Console.WriteLine("Relatório finalizado.");
+        }
     }
 }
