@@ -1,4 +1,4 @@
 Name,Document,DateOfBirth,Address,Number,Branch,Balance,IsActive
 Ana,123,19/05/1999,Av.Sete de Setembro,95148-6,0001,0,True
-Maria,123456,4533,Av. Rua,72234-7,0001,0,True
-Juliana,789,19/05/1999,Av. 1,91994-2,0001,0,False
+Maria,123456,4533,Av. Rua,72234-7,0001,153758.50,True
+Juliana,789,19/05/1999,Av. 1,91994-2,0001,0,True

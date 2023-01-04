@@ -17,7 +17,6 @@ namespace AdaCredit.UI.Domain
         public string DateOfBirth { get; set; }
         public string Address { get; set; }
         public Account Account { get; private set; } = null;
-        public bool IsActive { get; set; } = true;
 
         public Client(string name, long document, string dateOfBirth, string address)
         {
@@ -33,15 +32,6 @@ namespace AdaCredit.UI.Domain
             DateOfBirth = dateOfBirth;
             Address = address; 
             Account = account;
-        }
-        public Client(string name, long document, string dateOfBirth, string address, Account account, bool isActive)
-        {
-            Name = name;
-            Document = document;
-            DateOfBirth = dateOfBirth;
-            Address = address; 
-            Account = account;
-            IsActive = isActive;
         }
     }
 }

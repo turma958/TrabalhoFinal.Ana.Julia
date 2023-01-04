@@ -11,13 +11,14 @@ namespace AdaCredit.UI.Data
     public class AccountRepository
     {
         private static List<Account> _accounts = new List<Account>();
-        public static Account GetNewUnique(List<Client> clients)
-        {
-            foreach (var client in clients)
-            {
-                _accounts.Add(client.Account);
-            }
 
+        static AccountRepository()
+        {
+            var repository = new ClientRepository();
+            _accounts = repository.PassAccounts();
+        }
+        public Account GetNewUnique()
+        {
             var exists = false;
             var accountNumber = "";
 
@@ -29,6 +30,30 @@ namespace AdaCredit.UI.Data
             } while (exists);
 
             return new Account(accountNumber);
+        }
+        public bool IsAccountValid( string accountNumber, string branch)
+        {
+            accountNumber = accountNumber.Insert(5, "-");
+            bool flag = _accounts.Any(a => a.Number == accountNumber && a.Branch == branch);
+
+            return flag;
+        }
+        public bool IsAccountActive(string accountNumber, string branch)
+        {
+            accountNumber = accountNumber.Insert(5, "-");
+            var account = _accounts.FirstOrDefault(a => a.Number == accountNumber && a.Branch == branch);
+            
+            return account.IsActive;
+        }
+        public bool IsBalanceEnough(string accountNumber, string branch, decimal value)
+        {
+            accountNumber = accountNumber.Insert(5, "-");
+            bool result = false;
+            var account = _accounts.FirstOrDefault(a => a.Number == accountNumber && a.Branch == branch);
+            if (account.Balance > value)
+                result = true;
+
+            return result;
         }
     }
 }

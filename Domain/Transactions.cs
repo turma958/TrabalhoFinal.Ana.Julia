@@ -8,29 +8,34 @@ namespace AdaCredit.UI.Domain
 {
     public class Transactions
     {
-        public int SourceBank;
-        public int SourceBranch;
-        public int SourceAccountNumber;
+        public int SourceBank { get; set; }
+        public string SourceBranch { get; set; }
+        public string SourceAccountNumber { get; set; }
 
-        public int DestinationBank;
-        public int DestinationBranch;
-        public int DestinationAccountNumber;
+        public int DestinationBank { get; set; }
+        public string DestinationBranch { get; set; }
+        public string DestinationAccountNumber { get; set; }
 
-        public string Type;
-        public int Direction;
-        public decimal Value;
+        public string Type { get; set; }
+        public int Direction { get; set; }
+        public decimal Value { get; set; }
 
-        public Transactions(int sourceBank, int sourceBranch, int sourceAccountNumber, int destinationBank, int destinationBranch, int destinationAccountNumber, string type, int direction, decimal value)
+        //public Transactions(int sourceBank, string sourceBranch, string sourceAccountNumber, int destinationBank, string destinationBranch, string destinationAccountNumber, string type, int direction, decimal value)
+        //{
+        //    SourceBank = sourceBank;
+        //    SourceBranch = sourceBranch;
+        //    SourceAccountNumber = sourceAccountNumber;
+        //    DestinationBank = destinationBank;
+        //    DestinationBranch = destinationBranch;
+        //    DestinationAccountNumber = destinationAccountNumber;
+        //    Type = type;
+        //    Direction = direction;
+        //    Value = value;
+        //}
+
+        public override string ToString()
         {
-            SourceBank = sourceBank;
-            SourceBranch = sourceBranch;
-            SourceAccountNumber = sourceAccountNumber;
-            DestinationBank = destinationBank;
-            DestinationBranch = destinationBranch;
-            DestinationAccountNumber = destinationAccountNumber;
-            Type = type;
-            Direction = direction;
-            Value = value;
+            return $"{SourceBank},{SourceBranch},{SourceAccountNumber},{DestinationBank},{DestinationBranch},{DestinationAccountNumber},{Type},{Direction},{Value}";
         }
     }
 }

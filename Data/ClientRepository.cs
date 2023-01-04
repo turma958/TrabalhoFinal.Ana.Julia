@@ -11,6 +11,7 @@ using Bogus.DataSets;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Formats.Asn1;
+using System.Text.RegularExpressions;
 using CsvHelper.Configuration.Attributes;
 using System.Xml.Linq;
 
@@ -50,6 +51,12 @@ namespace AdaCredit.UI.Data
                 throw;
             }
         }
+        public List<Account> PassAccounts()
+        {
+            List<Account> accounts = _clients.Select(c => c.Account).ToList();
+            return accounts;
+        }
+
         public bool AddClient(Client client)
         {
             if (_clients.Any(c => c.Document.Equals(client.Document)))
@@ -59,7 +66,9 @@ namespace AdaCredit.UI.Data
 
                 return false;
             }
-            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address, AccountRepository.GetNewUnique(_clients)));
+
+            var repository = new AccountRepository();
+            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address, repository.GetNewUnique()));
             
             Save();
             return true;
@@ -94,7 +103,7 @@ namespace AdaCredit.UI.Data
 
                     foreach (var c in clients)
                     {
-                        if (c.IsActive)
+                        if (c.Account.IsActive)
                             situation = "Ativada";
                         Console.Write($"Nome: {c.Name}" +
                                       $"\nCPF: {c.Document}" +
@@ -117,7 +126,7 @@ namespace AdaCredit.UI.Data
             if (client == null)
                 return false;
 
-            if (client.IsActive)
+            if (client.Account.IsActive)
                 situation = "Ativada";
 
             Console.Write($"Nome: {client.Name}" +
@@ -171,14 +180,14 @@ namespace AdaCredit.UI.Data
             if(client==null) 
                 return false;
 
-            if (client.IsActive)
+            if (client.Account.IsActive)
             {
                 Console.WriteLine("A conta está ativa. Deseja desativar? (s/n)");
                 var answer = Console.ReadLine();
                 if (answer == "n")
                     return false;
 
-                client.IsActive = false;
+                client.Account.IsActive = false;
             }
             else
             {
@@ -187,12 +196,25 @@ namespace AdaCredit.UI.Data
                 if (answer == "n")
                     return false;
 
-                client.IsActive = true;
+                client.Account.IsActive = true;
             }
 
             Save();
             return true;
         }
 
+        public void ChargeValues(string accountNumber, string branch, decimal value, int direction)
+        {
+            accountNumber = accountNumber.Insert(5, "-");
+
+            var client = _clients.FirstOrDefault(c => c.Account.Number == accountNumber && c.Account.Branch == branch);
+
+            if (direction == 0)
+                client.Account.Balance -= value;
+            if (direction == 1)
+                client.Account.Balance += value;
+
+            Save();
+        }
     }
 }

@@ -11,7 +11,18 @@ namespace AdaCredit.UI.UseCases
     {
         public static void Execute()
         {
+            Console.WriteLine("\n----- Processando transações...\n");
+
             var repository = new TransactionsRepository();
+            var result = repository.Process();
+
+            string message = "\nTransações processadas com sucesso!";
+
+            if (!result)
+                message = "\nNão existem transações a serem processadas.";
+
+            Console.WriteLine(message);
+            Console.ReadKey();
         }
     }
 }

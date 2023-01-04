@@ -27,13 +27,13 @@ namespace AdaCredit.UI.Domain
             User = user;
         }
 
-        public Employee(string name, long document, User user, bool isActive, DateTime lastAccess)
-        {
-            Name = name;
-            Document = document;
-            User = user;
-            IsActive = isActive;
-            LastAccess = lastAccess;
-        }// For text register
+        //public Employee(string name, long document, User user, bool isActive, DateTime lastAccess)
+        //{
+        //    Name = name;
+        //    Document = document;
+        //    User = user;
+        //    IsActive = isActive;
+        //    LastAccess = lastAccess;
+        //}
     }
 }

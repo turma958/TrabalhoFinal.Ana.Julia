@@ -1,0 +1,8 @@
+28/11/2022, 778,0001,722347,777,0001,951486,TED,1,250,20, Conta de destino não tem saldo suficiente.
+28/11/2022, 778,0001,722348,777,0001,919945,TED,0,3000,50, Conta de destino tem dados inválidos ou inexistentes
+28/12/2022, 778,0001,722347,777,0001,951486,TED,1,250,20, Conta de destino não tem saldo suficiente.
+28/12/2022, 778,0001,722348,777,0001,919945,TED,0,3000,50, Conta de destino tem dados inválidos ou inexistentes
+28/10/2022, 778,0001,722347,777,0001,951486,TED,1,250,20, Conta de destino não tem saldo suficiente.
+28/10/2022, 778,0001,722348,777,0001,919945,TED,0,3000,50, Conta de destino tem dados inválidos ou inexistentes
+16/12/2022, 778,0001,722347,777,0001,951486,TED,1,250,20, Conta de destino não tem saldo suficiente.
+16/12/2022, 778,0001,722348,777,0001,919945,TED,0,3000,50, Conta de destino tem dados inválidos ou inexistentes
