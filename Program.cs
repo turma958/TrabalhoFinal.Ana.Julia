@@ -14,7 +14,9 @@ namespace AdaCredit.UI
         static void Main(string[] args)
         
         {
-            
+            Visual.Apply();
+            Visual.Intro();
+
             // Logar usuario
 
             Login.Show();
