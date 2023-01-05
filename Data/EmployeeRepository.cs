@@ -124,7 +124,7 @@ namespace AdaCredit.UI.Data
                         where e.Name == info
                         select e;
 
-                    if (employees.Equals(Enumerable.Empty<Employee>()))
+                    if (!employees.Any())
                         return false;
 
                     foreach (var e in employees)
@@ -139,7 +139,8 @@ namespace AdaCredit.UI.Data
                     }
                     return true;
                 case 2: //By document
-                    employee = _employees.FirstOrDefault(e => e.Document == long.Parse(info));
+                    long.TryParse(info, out var document);
+                    employee = _employees.FirstOrDefault(e => e.Document == document);
                     break;
                 default: //By username
                     employee = _employees.FirstOrDefault(e => e.User.Username == info);
@@ -233,6 +234,14 @@ namespace AdaCredit.UI.Data
             }
 
             Console.WriteLine("Relatório finalizado.");
+        }
+
+        public void AddEmployeesList(List<Employee> employees)
+        {
+            foreach (var employee in employees)
+                _employees.Add(employee);
+            
+            Save();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdaCredit.UI.Domain;
+using AdaCredit.UI.Testing;
 
 namespace AdaCredit.UI
 {
@@ -15,6 +16,8 @@ namespace AdaCredit.UI
             // Logar usuario
 
             Login.Show();
+            CreateClients.Execute();
+            CreateTransactions.Execute();
 
             // Mostrar menu
 

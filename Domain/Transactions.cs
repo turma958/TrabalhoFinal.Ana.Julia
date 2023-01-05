@@ -20,19 +20,18 @@ namespace AdaCredit.UI.Domain
         public int Direction { get; set; }
         public decimal Value { get; set; }
 
-        //public Transactions(int sourceBank, string sourceBranch, string sourceAccountNumber, int destinationBank, string destinationBranch, string destinationAccountNumber, string type, int direction, decimal value)
-        //{
-        //    SourceBank = sourceBank;
-        //    SourceBranch = sourceBranch;
-        //    SourceAccountNumber = sourceAccountNumber;
-        //    DestinationBank = destinationBank;
-        //    DestinationBranch = destinationBranch;
-        //    DestinationAccountNumber = destinationAccountNumber;
-        //    Type = type;
-        //    Direction = direction;
-        //    Value = value;
-        //}
-
+        public Transactions(int sourceBank, string sourceBranch, string sourceAccountNumber, int destinationBank, string destinationBranch, string destinationAccountNumber, string type, int direction, decimal value)
+        {
+            SourceBank = sourceBank;
+            SourceBranch = sourceBranch;
+            SourceAccountNumber = sourceAccountNumber;
+            DestinationBank = destinationBank;
+            DestinationBranch = destinationBranch;
+            DestinationAccountNumber = destinationAccountNumber;
+            Type = type;
+            Direction = direction;
+            Value = value;
+        }
         public override string ToString()
         {
             return $"{SourceBank},{SourceBranch},{SourceAccountNumber},{DestinationBank},{DestinationBranch},{DestinationAccountNumber},{Type},{Direction},{Value}";

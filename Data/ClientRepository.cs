@@ -25,9 +25,7 @@ namespace AdaCredit.UI.Data
         {
             try
             {
-                string path =
-                    Path.GetDirectoryName(
-                        @"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
+                string path = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory)));
                 string fileName = "Clients.txt";
                 string filePath = Path.Combine(path, fileName);
 
@@ -71,7 +69,7 @@ namespace AdaCredit.UI.Data
             }
 
             var repository = new AccountRepository();
-            _clients.Add(new Client(client.Name, client.Document, client.DateOfBirth, client.Address,
+            _clients.Add(new Client(client.Name, client.Document, client.Phone, client.Address,
                 repository.GetNewUnique()));
 
             Save();
@@ -80,9 +78,7 @@ namespace AdaCredit.UI.Data
 
         public void Save()
         {
-            string path =
-                Path.GetDirectoryName(
-                    @"C:\\Users\\Usuário\\Desktop\\projetos_C_sharp\\source\\repos\\AdaCredit\\Program.cs");
+            string path = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Environment.CurrentDirectory)));
             string fileName = "Clients.txt";
 
             string filePath = Path.Combine(path, fileName);
@@ -94,9 +90,9 @@ namespace AdaCredit.UI.Data
             }
         }
 
-        public bool GetInfos(int index, string info, string secondInfo = "")
+        public bool GetInfos(int index, string? info, string? secondInfo = "")
         {
-            Client client;
+            Client? client = null;
             string situation = "Desativada";
 
             switch (index)
@@ -106,7 +102,7 @@ namespace AdaCredit.UI.Data
                         where c.Name == info
                         select c;
 
-                    if (clients.Equals(Enumerable.Empty<Client>()))
+                    if (!clients.Any())
                         return false;
 
                     foreach (var c in clients)
@@ -115,7 +111,7 @@ namespace AdaCredit.UI.Data
                             situation = "Ativada";
                         Console.Write($"Nome: {c.Name}" +
                                       $"\nCPF: {c.Document}" +
-                                      $"\nData de nascimento: {c.DateOfBirth}" +
+                                      $"\nTelefone: {c.Phone}" +
                                       $"\nEndereço: {c.Address}" +
                                       $"\nNúmero da conta: {c.Account.Number}" +
                                       $"\nAgência: {c.Account.Branch}" +
@@ -125,7 +121,8 @@ namespace AdaCredit.UI.Data
 
                     return true;
                 case 2:
-                    client = _clients.FirstOrDefault(c => c.Document == long.Parse(info));
+                    long.TryParse(info, out var document);
+                    client = _clients.FirstOrDefault(c => c.Document == document);
                     break;
                 default:
                     client = _clients.FirstOrDefault(c => c.Account.Number == info && c.Account.Branch == secondInfo);
@@ -140,7 +137,7 @@ namespace AdaCredit.UI.Data
 
             Console.Write($"Nome: {client.Name}" +
                           $"\nCPF: {client.Document}" +
-                          $"\nData de nascimento: {client.DateOfBirth}" +
+                          $"\nTelefone: {client.Phone}" +
                           $"\nEndereço: {client.Address}" +
                           $"\nNúmero da conta: {client.Account.Number}" +
                           $"\nAgência: {client.Account.Branch}" +
@@ -169,7 +166,7 @@ namespace AdaCredit.UI.Data
                     client.Document = long.Parse(newData);
                     break;
                 case 3:
-                    client.DateOfBirth = newData;
+                    client.Phone = newData;
                     break;
                 case 4:
                     client.Address = newData;

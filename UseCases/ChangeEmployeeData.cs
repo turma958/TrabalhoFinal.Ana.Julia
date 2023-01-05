@@ -14,24 +14,26 @@ namespace AdaCredit.UI.UseCases
             Console.WriteLine("\n----- Alterar dados do funcionário -----\n");
 
             Console.Write("CPF da conta: ");
-            long document = long.Parse(Console.ReadLine());
+            var flag = long.TryParse(Console.ReadLine(), out long document);
 
             string newData = "";
-
             Console.WriteLine("\n---------- * ----------\n");
 
-            switch (index)
+            if (flag)
             {
-                case 1:
-                    Console.Write("\nNome a atualizar: ");
-                    newData = Console.ReadLine();
-                    break;
-                case 2:
-                    Console.Write("\nCPF a atualizar: ");
-                    newData = Console.ReadLine();
-                    break;
+                switch (index)
+                {
+                    case 1:
+                        Console.Write("\nNome a atualizar: ");
+                        newData = Console.ReadLine();
+                        break;
+                    case 2:
+                        Console.Write("\nCPF a atualizar: ");
+                        newData = Console.ReadLine();
+                        break;
+                }
             }
-
+            
             var repository = new EmployeeRepository();
             var result = repository.ChangeData(document, index, newData);
 

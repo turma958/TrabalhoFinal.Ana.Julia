@@ -15,34 +15,35 @@ namespace AdaCredit.UI.UseCases
             Console.WriteLine("\n----- Alterar dados do cliente -----\n");
 
             System.Console.Write("CPF da conta: ");
-            long document =long.Parse(Console.ReadLine());
+            var flag =long.TryParse(Console.ReadLine(), out long document);
 
             string newData = "";
-
-            switch (index)
-            {
-                case 1:
-                    Console.Write("\nNome atualizado: ");
-                    newData = Console.ReadLine();
-                    break;
-                case 2:
-                    Console.Write("\nCPF atualizado (somente números): ");
-                    newData = Console.ReadLine();
-                    break;
-                case 3:
-                    Console.Write("\nData de nascimento atualizada (dd/mm/aaaa): ");
-                    newData = Console.ReadLine();
-                    break;
-                case 4:
-                    Console.Write("\nEndereço atualizado: ");
-                    newData = Console.ReadLine();
-                    break;
-                //case 5:
-                //    Console.WriteLine("Uma nova conta será gerada.");
-            }
-
             Console.WriteLine("\n\n---------- * ----------\n");
 
+            if (flag)
+            {
+                switch (index)
+                {
+                    case 1:
+                        Console.Write("\nNome atualizado: ");
+                        newData = Console.ReadLine();
+                        break;
+                    case 2:
+                        Console.Write("\nCPF atualizado (somente números): ");
+                        newData = Console.ReadLine();
+                        break;
+                    case 3:
+                        Console.Write("\nTelefone atualizado (formato (XX) XXXXX-XXXX): ");
+                        newData = Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.Write("\nEndereço atualizado: ");
+                        newData = Console.ReadLine();
+                        break;
+                    //case 5:
+                    //    Console.WriteLine("Uma nova conta será gerada.");
+                }
+            }
             var repository = new ClientRepository();
             var result = repository.ChangeData(document, index, newData);
 

@@ -37,12 +37,12 @@ namespace AdaCredit.UI.UseCases
                     break;
             }
             
-            Console.WriteLine("\n---------- * ----------\n\n");
+            Console.WriteLine("\n---------- * ----------\n");
             var repository = new ClientRepository();
             var result = repository.GetInfos(index, info, secondInfo);
 
             if(!result)
-                Console.WriteLine("\nNão foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
+                Console.WriteLine("Não foi possível encontrar o cadastro. Verifique os dados ou cadastre um cliente novo.");
 
             Console.ReadKey();
         }

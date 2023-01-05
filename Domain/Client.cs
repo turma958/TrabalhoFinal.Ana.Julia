@@ -14,24 +14,24 @@ namespace AdaCredit.UI.Domain
     {
         public string Name { get; set; }
         public long Document { get; set; }
-        public string DateOfBirth { get; set; }
+        public string Phone { get; set; }
         public string Address { get; set; }
-        public Account Account { get; private set; } = null;
-
-        public Client(string name, long document, string dateOfBirth, string address)
+        public Account Account { get; set; } = null;
+        public Client(string name, long document, string phone, string address)
         {
             Name = name;
             Document = document;
-            DateOfBirth = dateOfBirth;
+            Phone = phone;
             Address = address;
         }
-        public Client(string name, long document, string dateOfBirth, string address, Account account)
+        public Client(string name, long document, string phone, string address, Account account)
         {
             Name = name;
             Document = document;
-            DateOfBirth = dateOfBirth;
+            Phone = phone;
             Address = address; 
             Account = account;
         }
+
     }
 }

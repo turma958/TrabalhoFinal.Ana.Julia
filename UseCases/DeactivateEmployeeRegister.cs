@@ -14,7 +14,7 @@ namespace AdaCredit.UI.UseCases
             Console.WriteLine("\n----- Desativar registro de funcionário -----\n");
 
             System.Console.Write("CPF (somente números): ");
-            long document = long.Parse(Console.ReadLine());
+            long.TryParse(Console.ReadLine(), out long document);
 
             Console.WriteLine("\n---------- * ----------\n");
 

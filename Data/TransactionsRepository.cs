@@ -16,8 +16,6 @@ namespace AdaCredit.UI.Data
 {
     public class TransactionsRepository
     {
-        private static List<Transactions> _transactions = new List<Transactions>();
-
         static TransactionsRepository() { }
         public List<string> FindPaths()
         {
@@ -218,7 +216,7 @@ namespace AdaCredit.UI.Data
                 int directionFixed = 0;
                 if(transaction.Direction == 0)
                     directionFixed = 1;
-                repository.ChargeValues(transaction.SourceAccountNumber, transaction.SourceBranch, valueWithTaxes, directionFixed);
+                repository.ChargeValues(transaction.DestinationAccountNumber, transaction.DestinationBranch, valueWithTaxes, directionFixed);
             }
         }
         public decimal ApplyTaxes(string type, int direction, DateOnly date, decimal value) // return value after taxes
@@ -239,7 +237,7 @@ namespace AdaCredit.UI.Data
         }
         public bool Process()
         {
-            string mainPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Transactions");
+            string mainPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Transactions\\Pending");
 
             if (!Directory.Exists(mainPath))
             {

@@ -1,4 +1,5 @@
 ﻿using AdaCredit.UI.Data;
+using AdaCredit.UI.Testing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace AdaCredit.UI.UseCases
             Console.Clear();
 
             AddNewEmployee.Execute();
+            CreateEmployees.Execute();
+
 
             return true;
         }

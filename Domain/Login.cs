@@ -24,7 +24,7 @@ namespace AdaCredit.UI.Domain
                 System.Console.Write("Senha: ");
                 var cleanPassword = EnterPassword.Execute();
 
-                if (IsFirstAccess.Execute() && username == "user" && cleanPassword == "pass")
+                if (username == "user" && cleanPassword == "pass" && IsFirstAccess.Execute())
                     break;
 
                 var repository = new EmployeeRepository();

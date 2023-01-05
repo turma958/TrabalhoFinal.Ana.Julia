@@ -29,12 +29,13 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subChangeClientData = new ConsoleMenu(Array.Empty<string>(), level: 2)
                 .Add("Alterar nome", () => ChangeClientData.Execute(1))
                 .Add("Alterar CPF", () =>ChangeClientData.Execute(2))
-                .Add("Alterar data de nascimento", () => ChangeClientData.Execute(3))
+                .Add("Alterar telefone", () => ChangeClientData.Execute(3))
                 .Add("Alterar endereço", () => ChangeClientData.Execute(4))
                 //.Add("Alterar número de conta", () => ChangeClientData.Execute(5))
                 .Add("Voltar", ConsoleMenu.Close)
@@ -47,6 +48,7 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subClient = new ConsoleMenu(Array.Empty<string>(), level: 1)
@@ -65,6 +67,7 @@ namespace AdaCredit.UI.Domain
                         System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subConsultEmployeeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
@@ -81,6 +84,7 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subChangeEmployeeData = new ConsoleMenu(Array.Empty<string>(), level: 2)
@@ -98,6 +102,7 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subEmployee = new ConsoleMenu(Array.Empty<string>(), level: 1)
@@ -115,6 +120,7 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subTransactions = new ConsoleMenu(Array.Empty<string>(), level: 1)
@@ -129,6 +135,7 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var subReports = new ConsoleMenu(Array.Empty<string>(), level: 1)
@@ -146,6 +153,7 @@ namespace AdaCredit.UI.Domain
                     config.WriteBreadcrumbAction = titles => System.Console.WriteLine(string.Join(" / ", titles));
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config.WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             var menu = new ConsoleMenu(Array.Empty<string>(), level: 0)
@@ -163,6 +171,7 @@ namespace AdaCredit.UI.Domain
                     config.EnableBreadcrumb = true;
                     config.SelectedItemBackgroundColor = ConsoleColor.DarkBlue;
                     config.SelectedItemForegroundColor = ConsoleColor.White;
+                    config. WriteHeaderAction = () => Console.WriteLine("Escolha uma opção:");
                 });
 
             menu.Show();

@@ -14,20 +14,22 @@ namespace AdaCredit.UI.UseCases
         {
             Console.WriteLine("\n----- Adicionar novo funcionário -----\n");
 
-            Console.WriteLine("Nome: ");
+            Console.Write("Nome: ");
             string name = Console.ReadLine();
 
-            Console.WriteLine("CPF (somente números): ");
-            long document = long.Parse(Console.ReadLine());
+            Console.Write("\nCPF (somente números): ");
+            bool documentFlag  = long.TryParse(Console.ReadLine(), out long document);
 
-            var employee = new Employee(name, document);
-            var repository = new EmployeeRepository();
+            var result = false;
+            if (documentFlag)
+            {
+                var employee = new Employee(name, document);
+                var repository = new EmployeeRepository();
 
-            
+                result = repository.AddEmployee(employee);
+            }
 
-            Console.WriteLine("\n---------- * ----------\n");
-
-            var result = repository.AddEmployee(employee);
+            Console.WriteLine("\n\n---------- * ----------\n");
 
             if (result)
             {

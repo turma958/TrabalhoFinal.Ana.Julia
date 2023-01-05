@@ -31,6 +31,12 @@ namespace AdaCredit.UI.Data
 
             return new Account(accountNumber);
         }
+
+        public Account ReturnRandomAccount()
+        {
+            var index = new Random().Next(0, _accounts.Count);
+            return _accounts[index];
+        }
         public bool IsAccountValid( string accountNumber, string branch)
         {
             accountNumber = accountNumber.Insert(5, "-");
