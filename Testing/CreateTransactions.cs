@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using AdaCredit.UI.Data;
 using Bogus;
 using AdaCredit.UI.Domain;
@@ -29,8 +24,6 @@ namespace AdaCredit.UI.Testing
                 var bankName = new Faker().Company.CompanyName(0).Replace(" ", "-").Replace(".", "");
                 var date = (new Faker().Date.RecentDateOnly(100)).ToString("yyyyMMdd");
                 var fileName = $"{bankName}-{date}.csv";
-
-                var path = Path.Combine(mainPath, fileName);
 
                 // Create file content
                 List<Transactions> transactions = new List<Transactions>();
@@ -76,8 +69,11 @@ namespace AdaCredit.UI.Testing
         }
         static int GenerateAda(out string number, out string branch)
         {
-            var repository = new AccountRepository();
-            var account = repository.ReturnRandomAccount();
+            var repository = new ClientRepository();
+            var accounts = repository.PassAccounts();
+            var index = new Random().Next(0, accounts.Count);
+
+            var account = accounts[index];
             number = account.Number.Remove(5, 1);
             branch = account.Branch;
             return 777;
