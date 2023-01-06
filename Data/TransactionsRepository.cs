@@ -17,23 +17,6 @@ namespace AdaCredit.UI.Data
     public class TransactionsRepository
     {
         static TransactionsRepository() { }
-        public List<string> FindPaths()
-        {
-            string mainPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Transactions");
-
-            if (!Directory.Exists(mainPath))
-            {
-                Directory.CreateDirectory(mainPath);
-            }
-                
-
-            var filteredFiles = Directory
-                .GetFiles(mainPath, "*.*")
-                .Where(file => !file.EndsWith("-completed.csv"))
-                .ToList();
-
-            return filteredFiles;
-        }
         public bool Failure(Transactions transaction, out string reason)
         {
             // If returns true, there is failure
@@ -281,7 +264,7 @@ namespace AdaCredit.UI.Data
                 FailureFileSave(failures, file, reasons);
                 File.Delete(file);
             }
-
+            Directory.Delete(mainPath);
             return true;
         }
         public static void FailedTransactions()

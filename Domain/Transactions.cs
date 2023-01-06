@@ -22,7 +22,7 @@ namespace AdaCredit.UI.Domain
 
         public Transactions(int sourceBank, string sourceBranch, string sourceAccountNumber, int destinationBank, string destinationBranch, string destinationAccountNumber, string type, int direction, decimal value)
         {
-            SourceBank = sourceBank;
+             SourceBank = sourceBank;
             SourceBranch = sourceBranch;
             SourceAccountNumber = sourceAccountNumber;
             DestinationBank = destinationBank;
