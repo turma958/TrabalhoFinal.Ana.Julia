@@ -20,13 +20,13 @@ namespace AdaCredit.UI.UseCases
             System.Console.Write("CPF (somente números): ");
             long document = long.Parse(Console.ReadLine());
 
-            System.Console.Write("Data de nascimento (dd/mm/aaaa): ");
-            string dateOfBirth = Console.ReadLine();
+            System.Console.Write("Telefone (XX) XXXXX-XXXX: ");
+            string phone = Console.ReadLine();
 
             System.Console.Write("Endereço: ");
             string address = Console.ReadLine();
 
-            var client = new Client(name, document, dateOfBirth, address);
+            var client = new Client(name, document, phone, address);
 
             Console.WriteLine("\n---------- * ----------\n");
 
